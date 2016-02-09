@@ -1,0 +1,133 @@
+var method = config.method;
+var params = [];
+for (var i = 0; i < config.metrics.length; i++) {
+    for (var j = 0; j < config.elements[i].length; j++) {
+        params.push({
+            "reportDescription": {
+                "source": "realtime",
+                "reportSuiteID": config.reportSuite,
+                "metrics": [{
+                    "id": config.metrics[i]
+                }],
+                "elements": [{
+                    "id": config.elements[i][j]
+                }],
+				"displayName": [{
+					"id": config.displayName[i][j]
+				}],
+                "dateGranularity": "minute:1",
+                "dateFrom": "-15 minutes"
+            }
+        });
+    }
+}
+
+var trendGraph = new AnimatedTrendGraph("#trendGraph", {
+    width: 660,
+    height: 200,
+    delay: 60000
+});
+var donutChart = new DonutChart("#donutChart", {
+    width: 300,
+    height: 450
+});
+var basicTable = new BasicTable("#data-table", {
+    columns: ["Page", "Page Views"]
+});
+var barGraph = new barGraph("#bar-graph", {
+	width: 300,
+    height: 300
+});
+
+var gMap = new gMap("map",{
+	width: 660,
+	height: 600
+});
+
+// number counter
+$(document).on("realtime-data-received", function(event, report) {
+    // grab the total for this time period
+    var total = report.totals[0];
+
+    // add a comma every thousand numbers (i.e. 1000 => 1,000)
+    var commaStep = $.animateNumber.numberStepFactories.separator(',');
+
+    //Animate the number
+    $('#total').animateNumber({
+        number: total,
+        numberStep: commaStep
+    }, 500);
+	
+    // trends graph
+    data = report.data.map(function(minute) {
+        return parseInt(minute.breakdownTotal[0]);
+    });
+    trendGraph.redrawGraph(data);
+	
+	//donuts graph
+    donutChart.redrawChart(report.pageTotals);
+	
+	//Table display
+    basicTable.update(report.pageTotals);
+	//console.log(report.pageTotals);
+	
+	//Bar Graph display - report.pageTotal[1] to be plotted on the graph
+	barGraph.redrawChart(report.pageTotals);
+	
+	gMap.redrawMap(report.pageTotals);
+});
+
+// call the realtime api
+var makeRealTimeRequest = function(index) {
+    //for(var i=0; i<params.length;i++){
+    //console.log(index);
+    MarketingCloud.makeRequest(config.username, config.secret, method, params[index], config.endpoint, function(response) {
+        if (response.status == 200) {
+			//console.log(report);
+            var report = response.responseJSON.report;
+			//console.log(report);
+            setPageTotals(report);
+			$('#currentHeader').html(params[index].reportDescription.displayName[0].id.toUpperCase());
+            if (report.pageTotals.length == 0) {
+                $('#total').html('<span class="no-data">No Data</span>');
+            } else {
+                var event = jQuery.Event("realtime-data-received");
+                $(document).trigger(event, report);
+            }
+        }
+    });
+    //}
+};
+
+var setPageTotals = function(report) {
+    // return the total count for each page
+    // formatted data is [["PageName", 123], ["PageName 2", 456]]
+    var totals = [];
+    $(report.data).each(function(i, minute) {
+        $(minute.breakdown).each(function(j, page) {
+            total = parseInt(page.counts[0]) + (totals[j] ? totals[j][1] : 0);
+            totals[j] = [page.name, total];
+        });
+    });
+    report.pageTotals = totals;
+}
+
+// code to run when the HTML is fully loaded
+$(document).ready(function() {
+    // request the initial report
+    var index = 3;
+    makeRealTimeRequest(index);
+    // set the dashboard to make a report request every 5 seconds
+    var time = config.interval; // milliseconds
+    var screenTime = config.screenUpdate;
+
+	var intervalID = window.setInterval(function() {
+        makeRealTimeRequest(index);
+    }, time);
+
+    /*var screenInterval = window.setInterval(function() {
+        index++;
+        if (index == params.length) index = 0;
+    }, screenTime);
+	*/
+});

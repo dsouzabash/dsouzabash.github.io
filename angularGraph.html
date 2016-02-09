@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TMobile Real-Time Dashboard</title>
+
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+
+    <!--Include the libraries we will be using -->
+    <script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
+	
+    <!-- Using D3 for Charting -->
+    <script src="js/d3.v2.js" type="text/javascript" ></script>
+    <script src="js/d3.animated_trend.js" type="text/javascript"></script>
+    <script src="js/d3.donut.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/bar_graph.js"></script>
+	<script type="text/javascript" src="js/googleMaps.js"></script>
+	
+    <!-- Using the Marketing Javascript SDK to pull the data -->
+    <script src="js/marketing-cloud-javascript-sdk/wsse.js" type="text/javascript"></script>
+    <script src="js/marketing-cloud-javascript-sdk/marketing_cloud.js" type="text/javascript"></script>
+
+    <!-- Using Jquery-animateNumber to change the number in a more eye catching way -->
+    <script src="js/jquery-animateNumber/jquery.animateNumber.min.js" type="text/javascript"></script>
+
+    <script src="js/config.js" type="text/javascript"></script>
+    <script src="js/custom.js" type="text/javascript"></script>
+	<script src="js/jquery.basic_table.js" type="text/javascript"></script>
+	
+	<!-- Google Maps API -->
+	
+	
+
+</head>
+
+<body id="index" class="home">
+	
+	<div id="header">
+			<img src="images/t-mobile-Logo.jpg" height="45" width="150"></img>
+	</div>
+    <div id="dashboard" class="content">	
+		
+		<h2 id="currentHeader" class="tmocolor"></h2>
+        <div id="numberWidget" class="widget third">
+            <span id="total" class="number tmocolor"><span class="wait"></span></span>
+        </div>
+        <div id="trendGraph" class="widget twothirds tmocolor"></div>
+		<div id="bar-graph"></div>
+        <div id="1half" class="widget half">
+          <div id="donutChart">
+            <div id="explanation" style="visibility: hidden;">
+              <span id="percentage"></span><br/>
+              of visitors
+            </div>
+            <div id="pagelabel">&nbsp;</div>
+          </div>
+          <div id="legend">&nbsp;</div>
+        </div>
+        <div id="2half" class="widget half">
+          <div id="ranked" class="widget">
+            <div id="data-table">&nbsp;</div>
+          </div>
+        </div>
+		 <div id="map"></div>
+		 <script>
+			function initialize(){
+				var mapOptions = {
+					zoom: 2,
+					center: {lat: 39.697948, lng: -97.314835},
+					zoom: 5
+				};
+				map = new google.maps.Map(document.getElementById('map'),mapOptions);
+			}
+		 </script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
+    </div>
+	<script src="js/paramLoad.js" type="text/javascript"></script>
+</body>
+
+</html>

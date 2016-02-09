@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		 <!--Include the libraries we will be using -->
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
+		
+		<!-- Using the Marketing Javascript SDK to pull the data -->
+		<script src="js/marketing-cloud-javascript-sdk/wsse.js" type="text/javascript"></script>
+		<script src="js/marketing-cloud-javascript-sdk/marketing_cloud.js" type="text/javascript"></script>
+		
+		<meta charset="utf-8">
+		<title>Google Maps</title>
+		<style>
+		#map {
+			width: 100%;
+			height: 600px;
+		}
+	</style>
+	</head>
+	<body>
+		<div id="map"></div>
+		 <script>
+			var map;
+			
+			function initialize() {
+			  var mapOptions = {
+				zoom: 2,
+				center: {lat: 39.697948, lng: -97.314835},
+				zoom: 5
+			  };
+			  map = new google.maps.Map(document.getElementById('map'),mapOptions);
+
+			  // Create a <script> tag and set the USGS URL as the source.
+			  //var script = document.createElement('script');
+
+			  //script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
+			  //document.getElementsByTagName('head')[0].appendChild(script);
+
+			  //map.data.loadGeoJson('data.json');
+				var params = {
+					"reportDescription":{
+						"source": "realtime",
+						"reportSuiteID": "tmobusprod",
+						"metrics": [
+							{ "id": "instances" }
+						], "elements": [
+							{ "id": "geoCity" }
+						],
+						"dateFrom": "-15 minutes",
+						"dateGranularity": "minute:1"
+					}
+				};
+				var makeRealTimeRequest = function() {
+					//for(var i=0; i<params.length;i++){
+					console.log("Inside makeRealTime Request");
+					MarketingCloud.makeRequest("ADsouza2:T-Mobile USA", "c121b105d38964020e46d4c915fb4687", 'Report.Run', params, "api.omniture.com", function(response) {
+						console.log(response.status);
+						if (response.status == 200) {
+							//console.log(report);
+							var report = response.responseJSON.report;
+							setPageTotals(report);
+							console.log(report.pageTotals);
+							for(var i=0; i<report.pageTotals.length; i++){
+								var geocoder =  new google.maps.Geocoder();
+								geocoder.geocode( { 'address': report.pageTotals[i][0]}, function(results, status) {
+								  if (status == google.maps.GeocoderStatus.OK) {
+									console.log("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+									var myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+									var marker = new google.maps.Marker({
+										position: myLatlng,
+										title:"Hello World!"
+									});
+
+									// To add the marker to the map, call setMap();
+									marker.setMap(map);
+								  } else {
+									console.log("Something got wrong " + status);
+								  }
+								});
+							}							
+						}
+					});
+					//}
+				};
+				var setPageTotals = function(report) {
+					// return the total count for each page
+					// formatted data is [["PageName", 123], ["PageName 2", 456]]
+					var totals = [];
+					$(report.data).each(function(i, minute) {
+						$(minute.breakdown).each(function(j, page) {
+							total = parseInt(page.counts[0]) + (totals[j] ? totals[j][1] : 0);
+							totals[j] = [page.name, total];
+						});
+					});
+					report.pageTotals = totals;
+				};
+
+				makeRealTimeRequest();
+				
+			  map.data.setStyle(function(feature) {
+				var magnitude = feature.getProperty('mag');
+				return {
+				  icon: getCircle(magnitude)
+				};
+			  });
+			  
+			}
+
+			function getCircle(magnitude) {
+			  var circle = {
+				path: google.maps.SymbolPath.CIRCLE,
+				fillColor: 'red',
+				fillOpacity: .2,
+				scale: Math.pow(2, magnitude) / 2,
+				strokeColor: 'white',
+				strokeWeight: .5
+			  };
+			  return circle;
+			}
+
+			function eqfeed_callback(results) {
+			  map.data.addGeoJson(results);
+			}
+
+			//google.maps.event.addDomListener(window, 'load', initialize);
+		 </script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
+	</body>
+</html>
