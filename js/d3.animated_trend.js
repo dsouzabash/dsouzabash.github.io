@@ -24,8 +24,8 @@ function AnimatedTrendGraph(id, config) {
     // create an SVG element inside the #graph div that fills 100% of the div
     this.graph = d3.select(id)
       .append("svg:svg")
-      .attr("width", "100%")
-      .attr("height", "100%");
+      .attr("width", config.width)
+      .attr("height", config.height);
 
     // create a line object that represents the SVN line we're creating
     this.line = d3.svg.line()

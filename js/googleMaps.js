@@ -36,14 +36,14 @@ function gMap(id,config){
 				var viewCircle = new google.maps.Circle({
 				  strokeColor: '#FF0000',
 				  strokeOpacity: 0.2,
-				  //strokeWeight: 0.5,
+				  strokeWeight: 0.5,
 				  fillColor: '#FF1493',
 				  fillOpacity: 0.2,
 				  map: map,
 				  center: results[0].geometry.location,
 				  radius: Math.sqrt(incomingData[1]) * 1000
 				});
-				console.log('Circle Radius: ' + viewCircle.getRadius());
+				//console.log('Circle Radius: ' + viewCircle.getRadius());
 				var direction = 1;
 				var rMin = viewCircle.getRadius(), rMax = viewCircle.getRadius()*200;
 				setInterval(function() {

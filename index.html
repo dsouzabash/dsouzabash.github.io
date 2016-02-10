@@ -5,6 +5,7 @@
     <title>TMobile Real-Time Dashboard</title>
 
     <link rel="stylesheet" href="css/main.css" type="text/css" />
+	<link rel="stylesheet" href="css/main.css" type="text/css" />
 
     <!--Include the libraries we will be using -->
     <script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
@@ -39,13 +40,26 @@
 			<img src="images/t-mobile-Logo.jpg" height="45" width="150"></img>
 	</div>
     <div id="dashboard" class="content">	
-		
 		<h2 id="currentHeader" class="tmocolor"></h2>
         <div id="numberWidget" class="widget third">
+			<h3 class="tmocolor">Total Views</h3>
             <span id="total" class="number tmocolor"><span class="wait"></span></span>
         </div>
-        <div id="trendGraph" class="widget twothirds tmocolor"></div>
-		<div id="bar-graph"></div>
+		<div id="trendGraph" class="widget twothirds tmocolor"></div>
+		<div id="bar-graph" class="widget twothirds" ></div>
+		<div id="map"></div>
+		 <script>
+			function initialize(){
+				var mapOptions = {
+					zoom: 2,
+					center: {lat: 39.697948, lng: -97.314835},
+					scrollwheel: false,
+					zoom: 5
+				};
+				map = new google.maps.Map(document.getElementById('map'),mapOptions);
+			}
+		 </script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
         <div id="1half" class="widget half">
           <div id="donutChart">
             <div id="explanation" style="visibility: hidden;">
@@ -61,18 +75,7 @@
             <div id="data-table">&nbsp;</div>
           </div>
         </div>
-		 <div id="map"></div>
-		 <script>
-			function initialize(){
-				var mapOptions = {
-					zoom: 2,
-					center: {lat: 39.697948, lng: -97.314835},
-					zoom: 5
-				};
-				map = new google.maps.Map(document.getElementById('map'),mapOptions);
-			}
-		 </script>
-		<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
+		
     </div>
 	<script src="js/paramLoad.js" type="text/javascript"></script>
 </body>

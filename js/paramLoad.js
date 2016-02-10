@@ -23,9 +23,9 @@ for (var i = 0; i < config.metrics.length; i++) {
 }
 
 var trendGraph = new AnimatedTrendGraph("#trendGraph", {
-    width: 660,
-    height: 200,
-    delay: 60000
+    width: 500,
+    height: 100,
+    delay: 1000
 });
 var donutChart = new DonutChart("#donutChart", {
     width: 300,
@@ -36,7 +36,7 @@ var basicTable = new BasicTable("#data-table", {
 });
 var barGraph = new barGraph("#bar-graph", {
 	width: 300,
-    height: 300
+    height: 100
 });
 
 var gMap = new gMap("map",{
