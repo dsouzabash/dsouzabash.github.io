@@ -27,7 +27,7 @@ function barGraph(id, config) {
 			//var newNumber = Math.random() * 30;  //New random number (0-30)
 			dataset.push(incomingData[i][1]);             //Add new number to array
 			//color.push(newValue);
-			newValue = this.numberMap(0,incomingData[0][1],0,70,incomingData[i][1]);
+			newValue = numberMap(0,incomingData[0][1],0,70,incomingData[i][1]);
 			plotData.push(newValue);
 		}
 		//console.log(plotData.color);
@@ -103,38 +103,10 @@ function barGraph(id, config) {
 				.attr("font-family", "sans-serif")
 				.attr("font-size", "11px")
 				.attr("fill", "white");
-				
-				
-			var legend = svg.append("g")
-								.attr("class","legend")
-								.attr("x", w - 40 - 65)
-								.attr("y", 25)
-								.attr("height", 100)
-								.attr("width",100);
-
-				legend.selectAll("g").data(dataset)
-					  .enter()
-					  .append('g')
-					  .each(function(d,i){
-					  	var g = d3.select(this);
-					  	g.append("rect")
-					  		.attr("x", w - 40 - 65)
-					  		.attr("y", i*25 + 10)
-					  		.attr("width", 10)
-					  		.attr("height",10)
-					  		.style("fill",plotColor[i]);
-
-					  	g.append("text")
-					  	 .attr("x", w - 40 - 50)
-					  	 .attr("y", i*25 + 20)
-					  	 .attr("height",20)
-					  	 .attr("width",100)
-					  	 .style("fill",plotColor[i])
-					  	 .text(incomingData[i][0]);
-					  });
 	};
-	
-	this.numberMap = function(oldLow,oldHigh,newLow,newHigh,num){
+}
+
+var numberMap = function(oldLow,oldHigh,newLow,newHigh,num){
 		//console.log('Inside numberMap: ' + oldLow + ', ' + oldHigh + ', '+ newLow + ', '+ newHigh + ', '+ num); 
 		oldRange = oldHigh - oldLow;
 		newRange = newHigh - newLow;
@@ -144,4 +116,3 @@ function barGraph(id, config) {
 		//newValueGreen = Math.round((((d - 0) * 150) / 30) + 100);
 		//newValueBlue = Math.round((((d - 0) * 100) / 30) + 150);
 	}
-}

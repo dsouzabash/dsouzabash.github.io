@@ -34,6 +34,9 @@ var donutChart = new DonutChart("#donutChart", {
 var basicTable = new BasicTable("#data-table", {
     columns: ["Page", "Page Views"]
 });
+var miniTable = new MiniTable("#mini-table", {
+    columns: ["Page"]
+});
 var barGraph = new barGraph("#bar-graph", {
 	width: 300,
     height: 100
@@ -41,7 +44,7 @@ var barGraph = new barGraph("#bar-graph", {
 
 var gMap = new gMap("map",{
 	width: 660,
-	height: 600
+	height: 800
 });
 
 // number counter
@@ -51,30 +54,67 @@ $(document).on("realtime-data-received", function(event, report) {
 
     // add a comma every thousand numbers (i.e. 1000 => 1,000)
     var commaStep = $.animateNumber.numberStepFactories.separator(',');
+	
+	//console.log('index: ' +report.index);
+	if(report.index==0){
+		//console.log('total city:'+ total);
+	    //Animate the number
+		$('#totalCity').animateNumber({
+			number: total,
+			numberStep: commaStep
+		}, 500);
 
-    //Animate the number
-    $('#total').animateNumber({
-        number: total,
-        numberStep: commaStep
-    }, 500);
-	
-    // trends graph
-    data = report.data.map(function(minute) {
-        return parseInt(minute.breakdownTotal[0]);
-    });
-    trendGraph.redrawGraph(data);
-	
-	//donuts graph
-    donutChart.redrawChart(report.pageTotals);
-	
-	//Table display
-    basicTable.update(report.pageTotals);
-	//console.log(report.pageTotals);
-	
-	//Bar Graph display - report.pageTotal[1] to be plotted on the graph
-	barGraph.redrawChart(report.pageTotals);
-	
-	gMap.redrawMap(report.pageTotals);
+		// trends graph
+		data = report.data.map(function(minute) {
+			return parseInt(minute.breakdownTotal[0]);
+		});
+		trendGraph.redrawGraph(data);
+		
+		//donuts graph
+		donutChart.redrawChart(report.pageTotals);
+		
+		//Table display
+		basicTable.update(report.pageTotals);
+		//console.log(report.pageTotals);
+		miniTable.update(report.pageTotals);
+		
+		//Bar Graph display - report.pageTotal[1] to be plotted on the graph
+		barGraph.redrawChart(report.pageTotals);
+		
+		gMap.redrawMap(report.pageTotals);
+	}
+	if(report.index==1){
+		//console.log('total views:'+ total);
+	    //Animate the number
+		$('#totalViews').animateNumber({
+			number: total,
+			numberStep: commaStep
+		}, 500);
+	}
+	if(report.index==2){
+		//console.log('total refers:'+ total);
+	    //Animate the number
+		$('#totalRefers').animateNumber({
+			number: total,
+			numberStep: commaStep
+		}, 500);
+	}
+	if(report.index==3){
+		//console.log('total exits:'+ total);
+	    //Animate the number
+		$('#totalExits').animateNumber({
+			number: total,
+			numberStep: commaStep
+		}, 500);
+	}
+	if(report.index==4){
+		//console.log('total search:'+ total);
+	    //Animate the number
+		$('#totalSearch').animateNumber({
+			number: total,
+			numberStep: commaStep
+		}, 500);
+	}
 });
 
 // call the realtime api
@@ -87,7 +127,8 @@ var makeRealTimeRequest = function(index) {
             var report = response.responseJSON.report;
 			//console.log(report);
             setPageTotals(report);
-			$('#currentHeader').html(params[index].reportDescription.displayName[0].id.toUpperCase());
+			report.index = index;
+			//$('#currentHeader').html(params[index].reportDescription.displayName[0].id.toUpperCase());
             if (report.pageTotals.length == 0) {
                 $('#total').html('<span class="no-data">No Data</span>');
             } else {
@@ -115,14 +156,18 @@ var setPageTotals = function(report) {
 // code to run when the HTML is fully loaded
 $(document).ready(function() {
     // request the initial report
-    var index = 3;
+    var index = 0;
     makeRealTimeRequest(index);
     // set the dashboard to make a report request every 5 seconds
     var time = config.interval; // milliseconds
     var screenTime = config.screenUpdate;
 
 	var intervalID = window.setInterval(function() {
-        makeRealTimeRequest(index);
+        for(var i=1;i<params.length;i++){
+			//console.log(i);
+			makeRealTimeRequest(i);
+		}
+			
     }, time);
 
     /*var screenInterval = window.setInterval(function() {

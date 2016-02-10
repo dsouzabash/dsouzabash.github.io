@@ -1,0 +1,53 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+<script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<style>
+	.carousel-control.left, .carousel-control.right {
+		background-image: none
+	}
+</style>
+</head>
+<body>
+	<div id="carousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel" data-slide-to="0" class="active" data-interval="false"></li>
+    <li data-target="#carousel" data-slide-to="1" data-interval="false"></li>
+    <li data-target="#carousel" data-slide-to="2" data-interval="false"></li>
+	<li data-target="#carousel" data-slide-to="3" data-interval="false"></li>
+	<li data-target="#carousel" data-slide-to="4" data-interval="false"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <div>Hello 1</div>
+    </div>
+    <div class="item">
+      <div>Hello 2</div>
+    </div>
+    <div class="item">
+      <div>Hello 3</div>
+    </div>
+    <div class="item">
+      <div>Hello 4</div>
+    </div>
+	<div class="item">
+      <div>Hello 5</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+    <span class=".icon-prev" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+    <span class=".icon-next" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</body>
+</html>
