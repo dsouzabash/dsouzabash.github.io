@@ -39,7 +39,9 @@
 		body { background: black !important; }
 	</style>
 	
-
+	<script>
+		$(function () { $(".carousel").carousel({ interval: false }); });
+	</script>
 </head>
 
 <body id="index" class="home">
@@ -56,14 +58,14 @@
 		</div>
 		<div id="searchEngine">
 		</div>
-		<div id="carousel" class="carousel slide" data-ride="carousel">
+		<div id="carousel" class="carousel slide" data-ride="carousel"  data-interval="false">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel" data-slide-to="0" class="active" data-interval="false"></li>
-    <li data-target="#carousel" data-slide-to="1" data-interval="false"></li>
-    <li data-target="#carousel" data-slide-to="2" data-interval="false"></li>
-	<li data-target="#carousel" data-slide-to="3" data-interval="false"></li>
-	<li data-target="#carousel" data-slide-to="4" data-interval="false"></li>
+    <li data-target="#carousel" data-slide-to="0" class="active" ></li>
+    <li data-target="#carousel" data-slide-to="1"></li>
+    <li data-target="#carousel" data-slide-to="2"></li>
+	<li data-target="#carousel" data-slide-to="3"></li>
+	<li data-target="#carousel" data-slide-to="4"></li>
   </ol>
 
   <!-- Wrapper for slides -->
@@ -90,21 +92,6 @@
 				}
 			 </script>
 			<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
-			<div id="1half" class="widget half">
-			  <div id="donutChart">
-				<div id="explanation" style="visibility: hidden;">
-				  <span id="percentage"></span><br/>
-				  of visitors
-				</div>
-				<div id="pagelabel">&nbsp;</div>
-			  </div>
-			  <div id="legend">&nbsp;</div>
-			</div>
-			<div id="2half" class="widget half">
-			  <div id="ranked" class="widget">
-				<div id="data-table" class="main-table">&nbsp;</div>
-			  </div>
-			</div>
 		</div>
     </div>
     <div class="item">
@@ -113,7 +100,21 @@
 				<h3 class="tmocolor">Total Views</h3>
 				<span id="totalViews" class="number tmocolor"><span class="wait"></span></span>
 		</div>
-		<div id="trendGraph" class="widget twothirds tmocolor"></div>
+		<div id="1half" class="widget half">
+			  <div id="donutChart">
+				<div id="explanation" style="visibility: hidden;">
+				  <span id="percentage"></span><br/>
+				  of visitors
+				</div>
+				<div id="pagelabel">&nbsp;</div>
+			  </div>
+			  <div id="legend">&nbsp;</div>
+		</div>
+		<div id="2half" class="widget half">
+			<div id="ranked" class="widget">
+				<div id="data-table" class="main-table">&nbsp;</div>
+			</div>
+		</div>
     </div>
     <div class="item">
       <h2 id="currentHeader" class="tmocolor">Referring Domains</h2>

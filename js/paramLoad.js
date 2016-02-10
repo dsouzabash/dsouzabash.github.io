@@ -70,11 +70,6 @@ $(document).on("realtime-data-received", function(event, report) {
 		});
 		trendGraph.redrawGraph(data);
 		
-		//donuts graph
-		donutChart.redrawChart(report.pageTotals);
-		
-		//Table display
-		basicTable.update(report.pageTotals);
 		//console.log(report.pageTotals);
 		miniTable.update(report.pageTotals);
 		
@@ -90,6 +85,12 @@ $(document).on("realtime-data-received", function(event, report) {
 			number: total,
 			numberStep: commaStep
 		}, 500);
+		
+		//donuts graph
+		donutChart.redrawChart(report.pageTotals);
+		
+		//Table display
+		basicTable.update(report.pageTotals);
 	}
 	if(report.index==2){
 		//console.log('total refers:'+ total);
