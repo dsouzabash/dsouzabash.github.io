@@ -43,6 +43,10 @@ var pieChart = new pieChart("#pieChart", {
 var basicTable = new BasicTable("#data-table", {
     columns: ["Page", "Page Views"]
 });
+var basicTable = new BasicTable("#data-tableExits", {
+    columns: ["Page", "Page Views"]
+});
+
 var miniTable = new MiniTable("#mini-table", {
     columns: ["Page"]
 });
@@ -124,6 +128,8 @@ $(document).on("realtime-data-received", function(event, report) {
 			numberStep: commaStep
 		}, 500);
 		donut3d.redrawDonut(report.pageTotals);
+		//Table display
+		basicTable.update(report.pageTotals);
 	}
 	if(report.index==4){
 		//console.log('total search:'+ total);
