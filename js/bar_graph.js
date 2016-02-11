@@ -52,8 +52,6 @@ function barGraph(id, config) {
 			.transition().duration(2000)
 			.attr("transform", "translate(0,0) scale(1, 1)");
 
-		
-		
 		svg.selectAll("rect")
 		   .data(plotData)
 		   .enter()

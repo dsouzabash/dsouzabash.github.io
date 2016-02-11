@@ -31,12 +31,26 @@ var donutChart = new DonutChart("#donutChart", {
     width: 300,
     height: 450
 });
+var donut3d = new donut3d("#donut3d", {
+    width: 300,
+    height: 450
+});
+var pieChart = new pieChart("#pieChart", {
+    width: 300,
+    height: 450
+});
+
 var basicTable = new BasicTable("#data-table", {
     columns: ["Page", "Page Views"]
 });
 var miniTable = new MiniTable("#mini-table", {
     columns: ["Page"]
 });
+
+var miniTableRefer = new MiniTable("#mini-tableRefer", {
+    columns: ["Page"]
+});
+
 var barGraph = new barGraph("#bar-graph", {
 	width: 300,
     height: 100
@@ -79,7 +93,7 @@ $(document).on("realtime-data-received", function(event, report) {
 		gMap.redrawMap(report.pageTotals);
 	}
 	if(report.index==1){
-		//console.log('total views:'+ total);
+		//console.log(report.pageTotals);
 	    //Animate the number
 		$('#totalViews').animateNumber({
 			number: total,
@@ -99,6 +113,8 @@ $(document).on("realtime-data-received", function(event, report) {
 			number: total,
 			numberStep: commaStep
 		}, 500);
+		pieChart.redrawPie(report.pageTotals);
+		miniTableRefer.update(report.pageTotals);
 	}
 	if(report.index==3){
 		//console.log('total exits:'+ total);
@@ -107,6 +123,7 @@ $(document).on("realtime-data-received", function(event, report) {
 			number: total,
 			numberStep: commaStep
 		}, 500);
+		donut3d.redrawDonut(report.pageTotals);
 	}
 	if(report.index==4){
 		//console.log('total search:'+ total);
