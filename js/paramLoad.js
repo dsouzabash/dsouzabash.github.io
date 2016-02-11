@@ -160,15 +160,19 @@ $(document).ready(function() {
     var index = 0;
     makeRealTimeRequest(index);
     // set the dashboard to make a report request every 5 seconds
-    var time = config.interval; // milliseconds
+	var time = config.interval;
+    if(index==0){
+		time = 3000; // milliseconds
+	}
+
     var screenTime = config.screenUpdate;
 
 	var intervalID = window.setInterval(function() {
-        for(var i=1;i<params.length;i++){
+        for(var i=0;i<params.length;i++){
 			//console.log(i);
 			makeRealTimeRequest(i);
 		}
-			
+		
     }, time);
 
     /*var screenInterval = window.setInterval(function() {
