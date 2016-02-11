@@ -12,7 +12,7 @@ var config = {
     endpoint:     "api.omniture.com",
 	metrics: 	  ["instances"],
 	elements:	  [["geoCity","page","referringDomain","linkExit","searchEngine"]],
-	displayName: [["Page Views by City","Page Views","Referring Domain","Exit Links","Search Engine"],["Geo Demographic Map Area","Search Engine"]],
+	displayName: [["Page Views by City","Page Views","Referring Domain","Exit Links"],["Geo Demographic Map Area","Search Engine"]],
 	//metrics: 	  "instances",
 	//elements:	  "page",
 	method: 	  'Report.Run',
