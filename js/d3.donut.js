@@ -49,8 +49,9 @@ function DonutChart(id, config) {
     data.splice(this.colors.length);
     json = this.buildHierarchy(data);
     this.createVisualization(json);
+	highlightIndividual(json);
   };
-
+  
   // Main function to draw and set up the visualization, once we have the data.
   this.createVisualization = function(json) {
     var self = this;
@@ -122,6 +123,8 @@ function DonutChart(id, config) {
 
   // Fade all but the current sequence, and show it in the breadcrumb trail.
   this.mouseover = function(d) {
+	//console.log('Inside mouse over');
+	//console.log(d);
     var percentage = (100 * d.value / donutchart.totalSize).toPrecision(3);
     var percentageString = percentage + "%";
     if (percentage < 0.1) {
@@ -138,6 +141,7 @@ function DonutChart(id, config) {
       .style("visibility", "");
 
     var sequenceArray = donutchart.getAncestors(d);
+	//console.log('sequence array: ' + sequenceArray);
     donutchart.updateLabels(sequenceArray, percentageString);
 
     // Fade all the segments.
@@ -147,6 +151,8 @@ function DonutChart(id, config) {
     // Then highlight only those that are an ancestor of the current segment.
     donutchart.vis.selectAll("path")
       .filter(function(node) {
+		//console.log(node);
+		//console.log(sequenceArray.indexOf(node));
         return (sequenceArray.indexOf(node) >= 0);
       })
       .style("opacity", 1);
@@ -419,6 +425,14 @@ function DonutChart(id, config) {
     return root;
   };
 
+  var highlightIndividual = function(d){
+    //console.log(d.children.length);
+	for(var i =0; i<d.children.length;i++){
+		//console.log(i);
+		this.mouseover(d.children[i]);
+	}
+  };
+  
   this.generateColor = function() {
       hex = Math.floor(Math.random()*16777215).toString(16);
 

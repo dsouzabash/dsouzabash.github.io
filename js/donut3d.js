@@ -1,9 +1,10 @@
 function donut3d(id, config) {
-
+	
 	this.redrawDonut= function(incomingData){
 		d3.select(id).selectAll('svg').remove();
+		
 		var Donut3D={};
-	
+		
 		function pieTop(d, rx, ry, ir ){
 			if(d.endAngle - d.startAngle == 0 ) return "M 0 0";
 			var sx = rx*Math.cos(d.startAngle),
@@ -130,6 +131,7 @@ function donut3d(id, config) {
 		for(var i=0;i<incomingData.length;i++){
 			inData.push({label:incomingData[i][0], value:incomingData[i][1], color:plotColor[i]});
 		}
+		//console.log(inData);
 		var salesData=[
 			{label:"Basic", color:"#3366CC"},
 			{label:"Plus", color:"#DC3912"},
@@ -139,16 +141,25 @@ function donut3d(id, config) {
 		];
 
 		var svg = d3.select(id).append("svg").attr("width",300).attr("height",300);
-
-		svg.append("g").attr("id","salesDonut");
-		svg.append("g").attr("id","quotesDonut");
-
-		Donut3D.draw("salesDonut", inData, 150, 150, 130, 100, 30, 0.4);
-		//Donut3D.draw("quotesDonut", randomData(), 450, 150, 130, 100, 30, 0);
-			
-		function changeData(){
+		//console.log("id:" + id);
+		
+		if(id.indexOf("refer")>-1){
+			svg.append("g").attr("id","quotesDonut");
+			Donut3D.draw("quotesDonut", inData, 150, 150, 130, 100, 30, 0);
+			Donut3D.transition("quotesDonut", randomData(), 130, 100, 30, 0);
+		}
+		else{
+			svg.append("g").attr("id","salesDonut");
+			Donut3D.draw("salesDonut", inData, 150, 150, 130, 100, 30, 0.4);
 			Donut3D.transition("salesDonut", randomData(), 130, 100, 30, 0.4);
-			//	Donut3D.transition("quotesDonut", randomData(), 130, 100, 30, 0);
+		}
+		
+		//changeData();
+		
+		function changeData(){
+			//console.log('Inside Change Data');
+			
+			
 		}
 
 		function randomData(){
