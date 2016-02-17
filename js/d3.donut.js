@@ -49,7 +49,7 @@ function DonutChart(id, config) {
     data.splice(this.colors.length);
     json = this.buildHierarchy(data);
     this.createVisualization(json);
-	highlightIndividual(json);
+	//highlightIndividual(json);
   };
   
   // Main function to draw and set up the visualization, once we have the data.
@@ -425,14 +425,14 @@ function DonutChart(id, config) {
     return root;
   };
 
-  var highlightIndividual = function(d){
+  /*var highlightIndividual = function(d){
     //console.log(d.children.length);
 	for(var i =0; i<d.children.length;i++){
 		//console.log(i);
 		this.mouseover(d.children[i]);
 	}
   };
-  
+  */
   this.generateColor = function() {
       hex = Math.floor(Math.random()*16777215).toString(16);
 

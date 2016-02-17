@@ -4,8 +4,8 @@ function barGraph(id, config) {
 	
 	// Dimensions of the chart.
 	config = config ? config : {};
-	this.width = config.width || 300;
-	this.height = config.height || 300;
+	this.width = config.width || 500;
+	this.height = config.height || 500;
 	this.separator = config.separator || null;
 		
 	this.redrawChart = function(incomingData) {

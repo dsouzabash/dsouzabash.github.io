@@ -20,6 +20,15 @@
 	<script type="text/javascript" src="js/mini_table.js"></script>
 	<script type="text/javascript" src="js/pieChart.js"></script>
 	<script type="text/javascript" src="js/donut3d.js"></script>
+	<script type="text/javascript" src="js/bubbleChart.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
+	<script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- Using the Marketing Javascript SDK to pull the data -->
     <script src="js/marketing-cloud-javascript-sdk/wsse.js" type="text/javascript"></script>
@@ -67,6 +76,8 @@
     <li data-target="#carousel" data-slide-to="1"></li>
     <li data-target="#carousel" data-slide-to="2"></li>
 	<li data-target="#carousel" data-slide-to="3"></li>
+	<li data-target="#carousel" data-slide-to="4"></li>
+	<li data-target="#carousel" data-slide-to="5"></li>
   </ol>
 
   <!-- Wrapper for slides -->
@@ -74,13 +85,6 @@
     <div class="item active">
       <div id="cityViews">
 			<h2 id="currentHeader" class="tmocolor">Page Views By City</h2>
-			<div id="numberWidget" class="widget third">
-				<h3 class="tmocolor">Total Views</h3>
-				<span id="totalCity" class="number tmocolor"><span class="wait"></span></span>
-			</div>
-			<div id="trendGraph" class="widget twothirds tmocolor"></div>
-			<div id="bar-graph" class="widget bargraph" ></div>
-			<div id="mini-table" class="minitable" ></div>
 			<div id="map"></div>
 			 <script>
 				function initialize(){
@@ -95,7 +99,22 @@
 			<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
 		</div>
     </div>
-    <div class="item">
+	<div class="item">
+		<h2 id="currentHeader" class="tmocolor">Graphs for Page Views By City</h2>
+		<div id="numberWidget" class="widget">
+				<h3 class="tmocolor">Total Views</h3>
+				<span id="totalCity" class="number tmocolor"><span class="wait"></span></span>
+		</div>
+		<div id="trendGraph" class="widget tmocolor"></div>
+		<div id="bar-graph" class="widget bargraph" ></div>
+		<div id="mini-table" class="minitable" ></div>
+	</div>
+	<div class="item">
+		<h2 id="currentHeader" class="tmocolor">Graphs for Page Views By City</h2>
+			<div id="bar-graph" class="widget bargraph" ></div>
+			<div id="mini-table" class="minitable" ></div>
+	</div>
+<!--	 <div class="item">
 		<h2 id="currentHeader" class="tmocolor">Current Pages being Viewed</h2>
 		<div id="numberWidget" class="widget third">
 				<h3 class="tmocolor">Total Views</h3>
@@ -116,6 +135,11 @@
 				<div id="data-table" class="main-table">&nbsp;</div>
 			</div>
 		</div>
+    </div>
+-->
+    <div class="item">
+		<h2 id="currentHeader" class="tmocolor">Current Pages being Viewed Bubble</h2>
+		<div class="bubbleChart"></div>
     </div>
     <div class="item">
       <h2 id="currentHeader" class="tmocolor">Referring Domains</h2>

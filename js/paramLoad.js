@@ -24,24 +24,31 @@ for (var i = 0; i < config.metrics.length; i++) {
 
 var trendGraph = new AnimatedTrendGraph("#trendGraph", {
     width: 500,
-    height: 100,
+    height: 200,
     delay: 1000
 });
-var donutChart = new DonutChart("#donutChart", {
+
+/*var donutChart = new DonutChart("#donutChart", {
     width: 300,
     height: 450
-});
+});*/
+
 var donut3drefer = new donut3d("#donut3drefer", {
-    width: 300,
-    height: 300
+    width: 600,
+    height: 600
 });
 
 var donut3d = new donut3d("#donut3d", {
+    width: 600,
+    height: 600
+});
+
+var pieChart = new pieChart("#pieChart", {
     width: 300,
     height: 450
 });
 
-var pieChart = new pieChart("#pieChart", {
+var bubbleChart = new bubbleChart(".bubbleChart", {
     width: 300,
     height: 450
 });
@@ -63,8 +70,8 @@ var miniTableExits = new MiniTable("#mini-tableExits", {
 });
 
 var barGraph = new barGraph("#bar-graph", {
-	width: 300,
-    height: 100
+	width: 500,
+    height: 300
 });
 
 var gMap = new gMap("map",{
@@ -112,10 +119,12 @@ $(document).on("realtime-data-received", function(event, report) {
 		}, 500);
 		
 		//donuts graph
-		donutChart.redrawChart(report.pageTotals);
+//		donutChart.redrawChart(report.pageTotals);
 		
 		//Table display
-		basicTable.update(report.pageTotals);
+//		basicTable.update(report.pageTotals);
+		
+		bubbleChart.redrawChart();
 	}
 	if(report.index==2){
 		//console.log('total refers:'+ total);

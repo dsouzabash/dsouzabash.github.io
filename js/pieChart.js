@@ -217,6 +217,4 @@ function pieChart(id, config) {
 					.remove();
 			};
 	}
-	
-
 }

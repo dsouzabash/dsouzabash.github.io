@@ -16,6 +16,6 @@ var config = {
 	//metrics: 	  "instances",
 	//elements:	  "page",
 	method: 	  'Report.Run',
-	interval: 	  '3000',
+	interval: 	  '1000',
 	screenUpdate: '1000'
 };
