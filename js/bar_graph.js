@@ -22,7 +22,7 @@ function barGraph(id, config) {
 		var color = [];
 		var dataset = [];
 		var plotData = [];
-		var plotColor = ['#FF1493','#FF34B3','#EE6AA7','#FF69B4','#EE799F','#EEA9B8','#FFC0CB','#FFAEB9','#FFB6C1'];
+		var plotColor = ['#FF1493','#FF34B3','#EE6AA7','#FF69B4','#EE799F','#EEA9B8','#FFC0CB','#FFAEB9','#FFB6C1','#FFB6C1'];
 		for (var i = 0; i <incomingData.length; i++) {           //Loop 25 times
 			//var newNumber = Math.random() * 30;  //New random number (0-30)
 			dataset.push(incomingData[i][1]);             //Add new number to array
@@ -64,7 +64,7 @@ function barGraph(id, config) {
 		   })
 		   .attr("width", w / plotData.length - barPadding)
 		   .attr("height", function(d) {
-		   		return d;
+		   		return d*2;
 		   })
 		   .style("fill", function(d,i) {
 				//console.log('plotColor: ' + plotColor[i]);
