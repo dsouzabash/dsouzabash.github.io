@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="js/pieChart.js"></script>
 	<script type="text/javascript" src="js/donut3d.js"></script>
 	<script type="text/javascript" src="js/bubbleChart.js"></script>
+	<script type="text/javascript" src="js/movingGraph.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
@@ -49,7 +50,18 @@
 		
 		body { background: black !important; }
 	</style>
-	
+	<style type='text/css'>
+
+		.chart {
+			margin-left: 42px;
+		}
+
+		.chart rect {
+			fill: magenta;
+			stroke: black;
+		}
+
+	</style>
 	<script>
 		$(function () { $(".carousel").carousel({ interval: false }); });
 	</script>
@@ -77,6 +89,7 @@
 	<li data-target="#carousel" data-slide-to="2"></li>
 	<li data-target="#carousel" data-slide-to="3"></li>
 	<li data-target="#carousel" data-slide-to="4"></li>
+	<li data-target="#carousel" data-slide-to="5"></li>
   </ol>
 
   <!-- Wrapper for slides -->
@@ -98,6 +111,83 @@
 			<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
 		</div>
     </div>
+	<div class="item">
+	<h2 id="currentHeader" class="tmocolor">Current Pages Viewed</h2>
+		<div id="movingGraph">
+		<script>
+		var t = 1297110663,
+    v = 70,
+    data = d3.range(33).map(next);
+
+function next() {
+  return {
+    time: ++t,
+    value: v = ~~Math.max(10, Math.min(90, v + 10 * (Math.random() - .5)))
+  };
+}
+
+var w = 30,
+    h = 200;
+
+var x = d3.scale.linear()
+    .domain([0, 1])
+    .range([0, w]);
+
+var y = d3.scale.linear()
+    .domain([0, 100])
+    .rangeRound([0, h]);
+	
+	var chart3 = d3.select("#movingGraph")
+  .append("svg:svg")
+    .attr("class", "chart")
+    .attr("width", w * data.length - 1)
+    .attr("height", h);
+
+chart3.append("svg:line")
+    .attr("x1", 0)
+    .attr("x2", w * data.length)
+    .attr("y1", h - .5)
+    .attr("y2", h - .5)
+    .attr("stroke", "#000");
+
+redraw3();
+
+function redraw3() {
+
+  var rect = chart3.selectAll("rect")
+      .data(data, function(d) { return d.time; });
+
+  rect.enter().insert("svg:rect", "line")
+      .attr("x", function(d, i) { return x(i + 1) - .5; })
+      .attr("y", function(d) { return h - y(d.value) - .5; })
+      .attr("width", w)
+      .attr("height", function(d) { return y(d.value); })
+    .transition()
+      .duration(1000)
+      .attr("x", function(d, i) { return x(i) - .5; });
+
+  rect.transition()
+      .duration(1000)
+      .attr("x", function(d, i) { return x(i) - .5; });
+
+  rect.exit().transition()
+      .duration(1000)
+      .attr("x", function(d, i) { return x(i - 1) - .5; })
+      .remove();
+
+}
+setInterval(function() {
+  data.shift();
+  data.push(next());
+  //redraw1();
+  //redraw2();
+  redraw3();
+}, 1500);
+
+		</script>
+
+		</div>
+	</div>
 	<div class="item">
 		<h2 id="currentHeader" class="tmocolor">Graphs for Page Views By City</h2>
 		<div id="numberWidget" class="widget">

@@ -1,27 +1,3 @@
-<html>
-<head>
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-  <script src="js/jquery-2.1.0.min.js"></script>
-  <script src="js/d3.v3.js"></script>
-</head>
-<body>
-    <div class="body">
-      <div class="content">
-    
-<style type='text/css'>
-
-.chart {
-  margin-left: 42px;
-}
-
-.chart rect {
-  fill: steelblue;
-  stroke: white;
-}
-
-</style>
-<script type='text/javascript'>
-
 var t = 1297110663,
     v = 70,
     data = d3.range(33).map(next);
@@ -33,9 +9,6 @@ function next() {
   };
 }
 
-</script>
-<script type='text/javascript'>
-
 var w = 20,
     h = 80;
 
@@ -46,11 +19,8 @@ var x = d3.scale.linear()
 var y = d3.scale.linear()
     .domain([0, 100])
     .rangeRound([0, h]);
-
-</script>
-<script type='text/javascript'>
-
-var chart3 = d3.select(".content")
+	
+	var chart3 = d3.select("#movingGraph")
   .append("svg:svg")
     .attr("class", "chart")
     .attr("width", w * data.length - 1)
@@ -89,10 +59,6 @@ function redraw3() {
       .remove();
 
 }
-
-</script>
-<script type='text/javascript'>
-
 setInterval(function() {
   data.shift();
   data.push(next());
@@ -100,11 +66,3 @@ setInterval(function() {
   //redraw2();
   redraw3();
 }, 1500);
-
-</script>
-
-      </div>
-    </div>
-  </div>
-    </body>
-</html>
