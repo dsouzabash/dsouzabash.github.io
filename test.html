@@ -1,55 +1,11 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-    html { height: 100% }
-    body { height: 100%; margin: 0; padding: 0 }
-    #map { height: 90%; width: 90% }
-</style>
-
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script-->
-    
-<script type="text/javascript">
-
-    function initialize() {
-        var center = new google.maps.LatLng(39.697948, -97.314835);
-        
-		var mapOptions = {
-					
-					center: {lat: 39.697948, lng: -97.314835},
-					scrollwheel: false,
-					zoom: 5
-				};
-		map = new google.maps.Map(document.getElementById('map'),mapOptions);
-
-        var circle = new google.maps.Circle({
-            center: center,
-            radius: 300000,
-            strokeColor: "#FF0000",
-            strokeOpacity: 1,
-            strokeWeight: 3,
-            fillColor: '#FF1493',
-			fillOpacity: 0.2,
-        });
-        circle.setMap(map);
-        var direction = 1;
-        var rMin = 15000, rMax = 300000;
-        setInterval(function() {
-            var radius = circle.getRadius();
-            if ((radius > rMax) || (radius < rMin)) {
-                direction *= -1;
-            }
-            circle.setRadius(radius + direction * 10000);
-        }, 50);
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-</head>
-
-<body>
-    <div id='map'></div>
-</body>
+    <head>
+        <title>Dynamic Charts Showcase - by Marcello La Rocca</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
+        <script type="text/javascript" src="js/chart_utils.js"></script>
+        <script type="text/javascript" src="js/dynamic_chart.js"></script>
+        <script type="text/javascript" src="js/test_2.js"></script>
+    </body>
 </html>

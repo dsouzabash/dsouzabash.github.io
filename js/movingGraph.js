@@ -9,8 +9,8 @@ function next() {
   };
 }
 
-var w = 20,
-    h = 80;
+var w = 50,
+	h = 200;
 
 var x = d3.scale.linear()
     .domain([0, 1])
@@ -19,6 +19,8 @@ var x = d3.scale.linear()
 var y = d3.scale.linear()
     .domain([0, 100])
     .rangeRound([0, h]);
+
+var format = d3.format(",.0f");
 	
 	var chart3 = d3.select("#movingGraph")
   .append("svg:svg")
@@ -36,19 +38,18 @@ chart3.append("svg:line")
 redraw3();
 
 function redraw3() {
-
   var rect = chart3.selectAll("rect")
       .data(data, function(d) { return d.time; });
 
   rect.enter().insert("svg:rect", "line")
       .attr("x", function(d, i) { return x(i + 1) - .5; })
-      .attr("y", function(d) { return h - y(d.value) - .5; })
+      .attr("y", function(d) { if(d.value) return h - y(d.value) - .5; else return h - y(50) - .5})
       .attr("width", w)
-      .attr("height", function(d) { return y(d.value); })
+      .attr("height", function(d) { if(d.value) return y(d.value); else return y(50);})
     .transition()
       .duration(1000)
       .attr("x", function(d, i) { return x(i) - .5; });
-
+	  
   rect.transition()
       .duration(1000)
       .attr("x", function(d, i) { return x(i) - .5; });
@@ -57,7 +58,7 @@ function redraw3() {
       .duration(1000)
       .attr("x", function(d, i) { return x(i - 1) - .5; })
       .remove();
-
+	  
 }
 setInterval(function() {
   data.shift();

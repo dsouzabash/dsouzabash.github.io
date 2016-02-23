@@ -71,7 +71,7 @@ var miniTableExits = new MiniTable("#mini-tableExits", {
 
 var barGraph = new barGraph("#bar-graph", {
 	width: 500,
-    height: 300
+    height: 200
 });
 
 var gMap = new gMap("map",{

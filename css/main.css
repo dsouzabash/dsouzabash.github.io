@@ -16,6 +16,9 @@ polyline{
 	stroke-width: 2px;
 	fill: none;
 }
+.bar text.value {
+  fill: white;
+}
 svg{
 	width: 100%;
 	height: 100%;
@@ -56,7 +59,7 @@ svg text.percent{
 .minitable {
 	font-size: 10px;
 	width: 80px;
-    float: left;
+	float: left;
 }
 
 table.minitable{
@@ -192,16 +195,7 @@ Widget should be follows by a twothirds widget */
     width: 500px;
     float: left;
 }
-.bargraph {
-     height: 400px;
-	 width: 500px;
-    
-}
-#trendGraph {
-	height: 250px;
-	width: 600px;
-	float:left;
-}
+
 .number {
     display: block;
 
@@ -345,4 +339,14 @@ circle {
 	max-width: 700px;
 	height: 700px;
 	margin: 0 auto;
+}
+html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
 }

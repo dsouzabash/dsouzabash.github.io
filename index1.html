@@ -21,7 +21,6 @@
 	<script type="text/javascript" src="js/pieChart.js"></script>
 	<script type="text/javascript" src="js/donut3d.js"></script>
 	<script type="text/javascript" src="js/bubbleChart.js"></script>
-	<script type="text/javascript" src="js/movingGraph.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
 	<script src="https://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
@@ -63,198 +62,101 @@
 
 	</style>
 	<script>
-		$(function () { $(".carousel").carousel({ interval: false }); });
+		$(function () { $(".carousel").carousel({ interval: 10000 }); });
 	</script>
 </head>
 
 <body id="index" class="home">
 	
 	<div id="header">
-			<img src="images/t-mobile-Logo.jpg" height="45" width="150"></img>
+		<img src="images/t-mobile-Logo.jpg" height="45" width="150"></img>
 	</div>
-    <div id="dashboard" class="content">	
-		<div id="pageViews">
-		</div>
-		<div id="referringDomain">
-		</div>
-		<div id="exitLinks">
-		</div>
-		<div id="searchEngine">
-		</div>
+    <div id="dashboard" class="container-fluid">	
 		<div id="carousel" class="carousel slide" data-ride="carousel"  data-interval="false">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel" data-slide-to="1"></li>
-	<li data-target="#carousel" data-slide-to="2"></li>
-	<li data-target="#carousel" data-slide-to="3"></li>
-	<li data-target="#carousel" data-slide-to="4"></li>
-	<li data-target="#carousel" data-slide-to="5"></li>
-  </ol>
+			<!-- Indicators -->
+		  <ol class="carousel-indicators hidden">
+			<li data-target="#carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel" data-slide-to="1"></li>
+			<li data-target="#carousel" data-slide-to="2"></li>
+			<li data-target="#carousel" data-slide-to="3"></li>
+			<li data-target="#carousel" data-slide-to="4"></li>
+		  </ol>
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <div id="cityViews">
-			<h2 id="currentHeader" class="tmocolor">Page Views By City</h2>
-			<div id="map"></div>
-			 <script>
-				function initialize(){
-					var mapOptions = {
-						center: {lat: 39.697948, lng: -97.314835},
-						scrollwheel: false,
-						zoom: 5
-					};
-					map = new google.maps.Map(document.getElementById('map'),mapOptions);
-				}
-			 </script>
-			<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
-		</div>
-    </div>
-	<div class="item">
-	<h2 id="currentHeader" class="tmocolor">Current Pages Viewed</h2>
-		<div id="movingGraph">
-		<script>
-		var t = 1297110663,
-    v = 70,
-    data = d3.range(33).map(next);
-
-function next() {
-  return {
-    time: ++t,
-    value: v = ~~Math.max(10, Math.min(90, v + 10 * (Math.random() - .5)))
-  };
-}
-
-var w = 30,
-    h = 200;
-
-var x = d3.scale.linear()
-    .domain([0, 1])
-    .range([0, w]);
-
-var y = d3.scale.linear()
-    .domain([0, 100])
-    .rangeRound([0, h]);
-	
-	var chart3 = d3.select("#movingGraph")
-  .append("svg:svg")
-    .attr("class", "chart")
-    .attr("width", w * data.length - 1)
-    .attr("height", h);
-
-chart3.append("svg:line")
-    .attr("x1", 0)
-    .attr("x2", w * data.length)
-    .attr("y1", h - .5)
-    .attr("y2", h - .5)
-    .attr("stroke", "#000");
-
-redraw3();
-
-function redraw3() {
-
-  var rect = chart3.selectAll("rect")
-      .data(data, function(d) { return d.time; });
-
-  rect.enter().insert("svg:rect", "line")
-      .attr("x", function(d, i) { return x(i + 1) - .5; })
-      .attr("y", function(d) { return h - y(d.value) - .5; })
-      .attr("width", w)
-      .attr("height", function(d) { return y(d.value); })
-    .transition()
-      .duration(1000)
-      .attr("x", function(d, i) { return x(i) - .5; });
-
-  rect.transition()
-      .duration(1000)
-      .attr("x", function(d, i) { return x(i) - .5; });
-
-  rect.exit().transition()
-      .duration(1000)
-      .attr("x", function(d, i) { return x(i - 1) - .5; })
-      .remove();
-
-}
-setInterval(function() {
-  data.shift();
-  data.push(next());
-  //redraw1();
-  //redraw2();
-  redraw3();
-}, 1500);
-
-		</script>
-
-		</div>
-	</div>
-	<div class="item">
-		<h2 id="currentHeader" class="tmocolor">Graphs for Page Views By City</h2>
-		<div id="numberWidget" class="widget">
-				<h3 class="tmocolor">Total Views</h3>
-				<span id="totalCity" class="number tmocolor"><span class="wait"></span></span>
-		</div>
-		<div id="trendGraph" class="widget tmocolor"></div>
-		<div id="bar-graph" class="widget bargraph" ></div>
-		<div id="mini-table" class="minitable" ></div>
-	</div>
-<!--	 <div class="item">
-		<h2 id="currentHeader" class="tmocolor">Current Pages being Viewed</h2>
-		<div id="numberWidget" class="widget third">
-				<h3 class="tmocolor">Total Views</h3>
-				<span id="totalViews" class="number tmocolor"><span class="wait"></span></span>
-		</div>
-		<div id="1half" class="widget half">
-			  <div id="donutChart">
-				<div id="explanation" style="visibility: hidden;">
-				  <span id="percentage"></span><br/>
-				  of visitors
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<div id="cityViews">
+					<h2 id="currentHeader" class="tmocolor">Page Views By City</h2>
+					<div id="map"></div>
+					<script>
+						function initialize(){
+							var mapOptions = {
+								center: {lat: 39.697948, lng: -97.314835},
+								scrollwheel: false,
+								zoom: 5
+							};
+							map = new google.maps.Map(document.getElementById('map'),mapOptions);
+						}
+					</script>
+					<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
 				</div>
-				<div id="pagelabel">&nbsp;</div>
-			  </div>
-			  <div id="legend">&nbsp;</div>
-		</div>
-		<div id="2half" class="widget half">
-			<div id="ranked" class="widget">
-				<div id="data-table" class="main-table">&nbsp;</div>
+			</div>
+			<div class="item">
+				<h2 id="currentHeader" class="tmocolor">Exit Links</h2>
+				<div id="numberWidget" class="widget third">
+						<h3 class="tmocolor">Total Exits</h3>
+						<span id="totalExits" class="number tmocolor"><span class="wait"></span></span>
+				</div>
+				<div id="donut3d"></div>
+				<div id="mini-tableExits" class="minitable" ></div>
+			</div>
+			<div class="item">
+				<h2 id="currentHeader" class="tmocolor">Current Page Views</h2>
+				<div id="numberWidget" class="widget">
+						<h3 class="tmocolor">Total Views</h3>
+						<span id="totalRefers" class="number tmocolor"><span class="wait"></span></span>
+				</div>
+				<div class="center-block" id="movingGraph">
+					<script type="text/javascript" src="js/movingGraph.js"></script>
+				</div>
+			</div>
+			<div class="item">
+			  <h2 id="currentHeader" class="tmocolor">Referring Domains</h2>
+				<div id="donut3drefer"></div>
+				<div id="mini-tableRefer" class="minitable" ></div>
+			</div>
+			<div class="item">
+				<h2 id="currentHeader" class="tmocolor">Current Pages being Viewed Bubble</h2>
+				<div class="bubbleChart"></div>
+			</div>
+			<div class="item">
+				<h2 id="currentHeader" class="tmocolor">Graphs for Page Views By City</h2>
+				<div id="numberWidget" class="widget">
+						<h3 class="tmocolor">Total Views</h3>
+						<span id="totalCity" class="number tmocolor"><span class="wait"></span></span>
+				</div>
+				<div class="container-fluid">
+					<div class = "row">
+						<div class="col-md-6">
+							<div id="trendGraph" class="center-block"></div>
+						</div>
+						<div class="col-md-6">
+							<div id="bar-graph" ></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-    </div>
--->
-    <div class="item">
-		<h2 id="currentHeader" class="tmocolor">Current Pages being Viewed Bubble</h2>
-		<div class="bubbleChart"></div>
-    </div>
-    <div class="item">
-      <h2 id="currentHeader" class="tmocolor">Referring Domains</h2>
-		<div id="numberWidget" class="widget third">
-				<h3 class="tmocolor">Total Referrers</h3>
-				<span id="totalRefers" class="number tmocolor"><span class="wait"></span></span>
+		  <!-- Controls -->
+		  <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+			<span class=".icon-prev" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+			<span class=".icon-next" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		  </a>
 		</div>
-		<div id="donut3drefer"></div>
-		<div id="mini-tableRefer" class="minitable" ></div>
-    </div>
-    <div class="item">
-		<h2 id="currentHeader" class="tmocolor">Exit Links</h2>
-		<div id="numberWidget" class="widget third">
-				<h3 class="tmocolor">Total Exits</h3>
-				<span id="totalExits" class="number tmocolor"><span class="wait"></span></span>
-		</div>
-		<div id="donut3d"></div>
-		<div id="mini-tableExits" class="minitable" ></div>
-    </div>
-  </div>
-
-  <!-- Controls -->
-  <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-    <span class=".icon-prev" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-    <span class=".icon-next" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
     </div>
 	<script src="js/paramLoad.js" type="text/javascript"></script>
 </body>

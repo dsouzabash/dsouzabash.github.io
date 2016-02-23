@@ -10,7 +10,7 @@
 function bubbleChart(id, config) {
 	//var bubbleChart = this;
 	this.redrawChart = function(){
-		var incomingData= [['Chicago','200'],['New York City','101'],['Seattle','340'],['Dallas','220'],['Loas Angeles','540'],['San Francisco','140'],['Portland','121'],['Phoenix','112'],['Detroit','205']];
+		var incomingData= [['Chicago','200'],['New York City','101'],['Seattle','340'],['Dallas','220'],['Los Angeles','540'],['San Francisco','140'],['Portland','121'],['Phoenix','112'],['Detroit','205']];
 		var items = [];
 			for(var i =0; i<incomingData.length;i++){
 				items.push({text:incomingData[i][0],count:Math.round(1000*Math.random())}); 
