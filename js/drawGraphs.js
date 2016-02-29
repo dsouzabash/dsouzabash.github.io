@@ -1,9 +1,9 @@
 console.log('Inside draw Graph');
 window.onload = function(){
-					var ctx = document.getElementById("chart-area").getContext("2d");
-					window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
-					document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
-				};
+	var ctx = document.getElementById("chart-area").getContext("2d");
+	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
+};
 $(".carousel").on('slid.bs.carousel', function () {
 	console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
 	if($('.item.active').attr('id') == 'doughnutChart'){
