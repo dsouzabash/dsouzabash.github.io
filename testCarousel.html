@@ -106,5 +106,17 @@ setInterval(function() {
       </div>
     </div>
   </div>
+  <div id="map"></div>
+					<script>
+						function initialize(){
+							var mapOptions = {
+								center: {lat: 39.697948, lng: -97.314835},
+								scrollwheel: false,
+								zoom: 5
+							};
+							map = new google.maps.Map(document.getElementById('map'),mapOptions);
+						}
+					</script>
+					<script src="https://maps.googleapis.com/maps/api/js?callback=initialize" async defer></script>
     </body>
 </html>

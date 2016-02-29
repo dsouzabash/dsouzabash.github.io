@@ -79,6 +79,11 @@ var gMap = new gMap("map",{
 	height: 800
 });
 
+/*var orderGraph = new orderGraph("#orderGraph",{
+	width: 500,
+	height: 200
+});
+*/
 // number counter
 $(document).on("realtime-data-received", function(event, report) {
     // grab the total for this time period

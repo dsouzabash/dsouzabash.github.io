@@ -1,29 +1,36 @@
-
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=1024">
-		<title>Animated Bar Chart</title>
-		<link rel="stylesheet" href="css/common.css">
-		<link rel="stylesheet" href="css/newBarGraph.css">
-		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-		
+<html>
+    <head>
+        <title>Dynamic Charts</title>
 		<script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script src="js/Chart.js"></script>
 		<style type="text/css">
-			.carousel-control.left, .carousel-control.right {
-				background-image: none !important;
-			}
+		.carousel-control.left, .carousel-control.right {
+			background-image: none !important;
+		}
 		</style>
-	</head>
-	<body>
+		<script>
+		$(function () { 
+			$(".carousel").carousel({ 
+				interval: false 
+			});
+		});
+	</script>
+	<style>
+      #map {
+        height: 100%;
+		height: 600px;
+      }
+    </style>
+    </head>
+    <body>
 		<div id="header">
 			<img src="images/t-mobile-Logo.jpg" height="45" width="150"></img>
 		</div>
-		<div id="container" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+        <div id="container" style="min-width: 200px; height: 200px; margin: 0 auto"></div>
 		<script>
 			$(function () {
 				$(document).ready(function () {
@@ -40,7 +47,6 @@
 							marginRight: 10,
 							events: {
 								load: function () {
-
 									// set up the updating of the chart each second
 									var series = this.series[0];
 									setInterval(function () {
@@ -76,7 +82,7 @@
 							}
 						},
 						legend: {
-							enabled: false
+							enabled: true
 						},
 						exporting: {
 							enabled: false
@@ -102,44 +108,6 @@
 				});
 			});
 		</script>
-		
-		<div id="wrapper">
-						<div class="chart">
-							<h2>Revenue and Orders over the last 4 years</h2>
-							<table id="data-table" border="1" cellpadding="10" cellspacing="0">
-								<caption>Revenue in thousands</caption>
-								<thead>
-									<tr>
-										<td>&nbsp;</td>
-										<th scope="col">2012</th>
-										<th scope="col">2013</th>
-										<th scope="col">2014</th>
-										<th scope="col">2015</th>
-										<th scope="col">2016</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">Orders</th>
-										<td>4080</td>
-										<td>6080</td>
-										<td>6240</td>
-										<td>3520</td>
-										<td>2240</td>
-									</tr>
-									<tr>
-										<th scope="row">Revenue</th>
-										<td>5680</td>
-										<td>6880</td>
-										<td>5760</td>
-										<td>5120</td>
-										<td>2640</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-		
 		<div id="dashboard" class="container-fluid">
 			<div id="carousel" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators hidden">
@@ -147,37 +115,45 @@
 					<li data-target="#carousel" data-slide-to="1"></li>
 					<li data-target="#carousel" data-slide-to="2"></li>
 					<li data-target="#carousel" data-slide-to="3"></li>
-					<li data-target="#carousel" data-slide-to="4"></li>
-					<li data-target="#carousel" data-slide-to="5"></li>
 				</ol>
 				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						Inside item 0
+					<div class="item active" id="doughnutChart">
+									<div id="canvas-holder" style="width: 500px; height: 500px; float:left;" >
+										<canvas id="chart-area" height="500" width="500"/>
+									</div>
+								
+									<div id="js-legend" class="chart=legend">
+									</div>
 					</div>
-					<div class="item">
-						Inside item 1
+					<div class="item" id="barGraph">
+						<h2> Revenue/Order Comparison for 4 years using Bars</h2>
+						<div style="width: 50%">
+							<canvas id="bar-graph" height="400" width="600"></canvas>
+						</div>
 					</div>
-					<div class="item">
-						Inside item 2
+					<div class="item" id="lineGraph">
+						<h2> Revenue/Order Comparison for 4 years Using Line graph</h2>
+						<div style="width: 50%">
+							<canvas id="line-graph" height="400" width="600"></canvas>
+						</div>
 					</div>
-					<div class="item">
-						Inside item 3
-					</div>
-					<div class="item">
-						Inside item 4
-					</div>
-					<div class="item">
-						Inside item 5
+					<div class="item" id="cityMap">
+						<h2 id="currentHeader" class="tmocolor">Orders By City</h2>
+						<div id="map"></div>
 					</div>
 				</div>
+				<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+					<span class=".icon-prev" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+					<span class=".icon-next" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
 			</div>
 		</div>
-		<!-- JavaScript at the bottom for fast page loading -->
-		
-		<!-- Grab jQuery from Google -->
-		
-		<!-- Example JavaScript -->
-		<script src="js/newBarGraph.js"></script>
-		
-	</body>
+		<script src="js/drawGraphs.js"></script>
+		<script src="js/dataset.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmzunyxuMAz6MFqOgLTE2viTVsCqmvsDA" async defer></script>
+    </body>
 </html>
