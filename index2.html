@@ -12,13 +12,13 @@
 			background-image: none !important;
 		}
 		</style>
-		<script>
+		<!--<script>
 		$(function () { 
 			$(".carousel").carousel({ 
 				interval: 10000 
 			});
 		});
-	</script>
+	</script>-->
 	<style>
       #map {
         height: 100%;
@@ -117,27 +117,26 @@
 					<li data-target="#carousel" data-slide-to="3"></li>
 				</ol>
 				<div class="carousel-inner" role="listbox">
-					<div class="item active" id="doughnutChart">
-									<div id="canvas-holder" style="width: 500px; height: 500px; float:left;" >
-										<canvas id="chart-area" height="500" width="500"/>
-									</div>
-								
-									<div id="js-legend" class="chart=legend">
-									</div>
+					<div class="item active" id="doughnutChart" data-interval="10000">
+						<div id="canvas-holder" style="width: 500px; height: 500px; float:left;" >
+							<canvas id="chart-area" height="500" width="500"/>
+						</div>
+						<div id="js-legend" class="chart=legend">
+						</div>
 					</div>
-					<div class="item" id="barGraph">
+					<div class="item" id="barGraph" data-interval="10000">
 						<h2> Revenue/Order Comparison for 4 years using Bars</h2>
-						<div style="width: 50%">
+						<div style="width: 80%">
 							<canvas id="bar-graph" height="400" width="600"></canvas>
 						</div>
 					</div>
-					<div class="item" id="lineGraph">
+					<div class="item" id="lineGraph" data-interval="10000">
 						<h2> Revenue/Order Comparison for 4 years Using Line graph</h2>
 						<div style="width: 50%">
 							<canvas id="line-graph" height="400" width="600"></canvas>
 						</div>
 					</div>
-					<div class="item" id="cityMap">
+					<div class="item" id="cityMap" data-interval="30000">
 						<h2 id="currentHeader" class="tmocolor">Orders By City</h2>
 						<div id="map"></div>
 					</div>

@@ -1,11 +1,14 @@
 console.log('Inside draw Graph');
+var firstLoadFlag;
 window.onload = function(){
+	firstLoadFlag = true;
 	var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
 };
+
 $(".carousel").on('slid.bs.carousel', function () {
-	console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
+	//console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
 	if($('.item.active').attr('id') == 'doughnutChart'){
 		redrawDoughnut();
 	}
@@ -16,20 +19,32 @@ $(".carousel").on('slid.bs.carousel', function () {
 		redrawLineGraph();
 	}
 	else if($('.item.active').attr('id') == 'cityMap'){
-		initMap();
+		//console.log('firstLoadFlag: ' + firstLoadFlag);
+		if(firstLoadFlag == true)
+			initMap();
+		else{
+			var i = 0;
+			(function loop() {
+				codeAddress(mapData.cities[i],mapData.orders[i],mapData.revenue[i]);
+				if (++i < mapData.cities.length) {
+					setTimeout(loop, 3000);
+				}
+			})();
+		}
 	}
 });
 
 //-------------------------------Gooogle Maps javscript ------------------------//
 	var map;
     function initMap() {
-		console.log('Inside initMap');
+		console.log('Inside initMap: ');
+		firstLoadFlag = false;
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 39.697948, lng: -97.314835},
-          zoom: 4
+          zoom: 5
         });
 		var i = 0;
-		(function loop() {		
+		(function loop() {
 			codeAddress(mapData.cities[i],mapData.orders[i],mapData.revenue[i]);
 			if (++i < mapData.cities.length) {
 				setTimeout(loop, 3000);
@@ -54,7 +69,6 @@ $(".carousel").on('slid.bs.carousel', function () {
 				window.setTimeout(function(){
 					infowindow.close(map, marker);
 				},1500);
-				
 			} else {
 				console.log("Geocode was not successful for the following reason: " + status);
 			}

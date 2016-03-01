@@ -1,51 +1,51 @@
 var doughnutData = [
 	{
 		value: 300,
-		color:"#F7464A",
+		color:"#FF1493",
 		label: "Phone"
 	},
 	{
 		value: 50,
-		color: "#46BFBD",
-		highlight: "#5AD3D1",
+		color: "#FF3E96",
+		highlight: "#FF6EB4",
 		label: "New Lines"
 	},
 	{
 		value: 100,
-		color: "#FDB45C",
+		color: "#FF6EB4",
 		highlight: "#FFC870",
 		label: "Add a line"
 	},
 	{
 		value: 40,
-		color: "#949FB1",
+		color: "#FF82AB",
 		highlight: "#A8B3C5",
 		label: "Data Orders"
 	},
 	{
 		value: 120,
-		color: "#4D5360",
+		color: "#FFAEB9",
 		highlight: "#616774",
 		label: "Jump Upgrades"
 	}
 ];
 
 barChartData = {
-	labels : ["January","February","March","April","May","June","July"],
+	labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
 	datasets : [
 		{
-			fillColor : "rgba(220,220,220,0.5)",
-			strokeColor : "rgba(220,220,220,0.8)",
-			highlightFill: "rgba(220,220,220,0.75)",
-			highlightStroke: "rgba(220,220,220,1)",
-			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+			fillColor : "rgba(255,20,147,0.8)",
+			strokeColor : "rgba(255,20,147,0.8)",
+			highlightFill: "rgba(255,20,147,0.75)",
+			highlightStroke: "rgba(255,20,147,1)",
+			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
 		},
 		{
-			fillColor : "rgba(151,187,205,0.5)",
-			strokeColor : "rgba(151,187,205,0.8)",
-			highlightFill : "rgba(151,187,205,0.75)",
-			highlightStroke : "rgba(151,187,205,1)",
-			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+			fillColor : "rgba(255,192,203,0.8)",
+			strokeColor : "rgba(255,192,203,0.8)",
+			highlightFill : "rgba(255,192,203,0.8)",
+			highlightStroke : "rgba(255,192,203,0.8)",
+			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
 		}
 	]
 };
