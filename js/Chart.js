@@ -2603,6 +2603,7 @@
 			//Declare segments as a static property to prevent inheriting across the Chart type prototype
 			this.segments = [];
 			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
+			console.log('chart width: ' + this.chart.width + 'chart height: ' + this.chart.height);
 			console.log('outer Radius: ' + this.outerRadius);
 			this.outerRadius = 200
 			this.SegmentArc = Chart.Arc.extend({

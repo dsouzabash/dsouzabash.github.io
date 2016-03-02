@@ -2,15 +2,18 @@ console.log('Inside draw Graph');
 var firstLoadFlag;
 window.onload = function(){
 	firstLoadFlag = true;
-	var ctx = document.getElementById("chart-area").getContext("2d");
+	redrawDoughnut();
+	/*var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
+	*/
 };
 
 $(".carousel").on('slid.bs.carousel', function () {
 	//console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
 	if($('.item.active').attr('id') == 'doughnutChart'){
 		redrawDoughnut();
+		
 	}
 	else if($('.item.active').attr('id') == 'barGraph'){
 		redrawGraph();
@@ -31,7 +34,16 @@ $(".carousel").on('slid.bs.carousel', function () {
 				}
 			})();
 		}
+		$('#container').hide();
 	}
+	/*var duration = $(this).find('.item.active').attr('data-interval');
+	console.log('In here: before pause' + duration);
+	$(".carousel").carousel('pause');
+	console.log('In here: after pause' + duration);
+	setTimeout(function(){
+		console.log('Inside setTimeout: ' + duration);
+		$(".carousel").carousel('next');
+	},duration);*/
 });
 
 //-------------------------------Gooogle Maps javscript ------------------------//
@@ -61,9 +73,12 @@ $(".carousel").on('slid.bs.carousel', function () {
 					map: map,
 					title: 'Center (Click)'
 				});
+				
+				map.panTo(results[0].geometry.location);
+				map.setCenter(results[0].geometry.location);
 				var infowindow = new google.maps.InfoWindow({
-					content: 'City :' + incomingCity + '\n Orders : ' + incomingOrders + '\n Revenue : ' + incomingRevenue,
-					maxWidth: 200
+					content: 'City :' + incomingCity + "<br/>" + 'Orders : ' + incomingOrders + "<br/>" +'Revenue : ' + incomingRevenue,
+					
 				});
 				infowindow.open(map, marker);
 				window.setTimeout(function(){
@@ -80,6 +95,17 @@ var redrawDoughnut = function(){
 	var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
+	redrawWidgetGraph();
+};
+
+var redrawWidgetGraph = function(){
+	console.log('Inside redrawWidgetgraph');
+	var ctx = document.getElementById("january-chart-area").getContext("2d");
+	window.myBar = new Chart(ctx).Bar(barWidgetData, {
+		responsive : true,
+		width: 1000,
+		height: 100
+	});
 };
 
 //-------------------------------Graph javscript ------------------------//
