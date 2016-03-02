@@ -7,11 +7,38 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script src="js/Chart.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.1/angular.min.js"></script>
+		<!-- Using Jquery-animateNumber to change the number in a more eye catching way -->
+		<script src="js/jquery-animateNumber/jquery.animateNumber.min.js" type="text/javascript"></script>
+		<style type="text/css">
+			.chart-legend li span{
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				margin-right: 5px;
+			}
+			li {
+				list-style-type: none;
+			}
+			.number {
+				display: block;
+
+				/*Adjust these to make the numbers bigger on the number widget*/
+				font-size: 40px;
+				line-height: 40px;
+			}
+			.tmocolor{
+				color:#FF00FF;
+			}
+
+		</style>
 		<style type="text/css">
 		.carousel-control.left, .carousel-control.right {
 			background-image: none !important;
 		}
+		body { color:pink;}
 		</style>
+
 		<script>
 		$(function () { 
 			$(".carousel").carousel({ 
@@ -21,8 +48,7 @@
 	</script>
 	<style>
       #map {
-        height: 100%;
-		height: 600px;
+        height: 80%;
       }
     </style>
     </head>
@@ -121,57 +147,107 @@
 						<div id="canvas-holder" style="width: 500px; height: 500px; float:left;" >
 							<canvas id="chart-area" height="500" width="500"/>
 						</div>
-						<div id="js-legend" class="chart=legend">
+						<div id="js-legend" class="chart-legend" style="width: 200px; height: 200px; float:left;">
+						</div>
+						<div id="monthly-figures" style="margin-left:10%;float:left;">
+							<div id="januarySales"  class="number tmocolor">January <span id="totalJanuaryMonthlySales"></span></div>
+							<div id="februarySales" class="number tmocolor">Feburary <span id="totalFebruaryMonthlySales"></span></div>
+							<div id="marchSales" class="number tmocolor">March <span id="totalMarchMonthlySales" class="number tmocolor"></span></div>
+							<div id="aprilSales" class="number tmocolor">April <span id="totalAprilMonthlySales" class="number tmocolor"></span></div>
+							<div id="maySales" class="number tmocolor">May <span id="totalMayMonthlySales" class="number tmocolor"></span></div>
+							<div id="juneSales" class="number tmocolor">June <span id="totalJuneMonthlySales" class="number tmocolor"></span></div>
+							<div id="julySales" class="number tmocolor">July <span id="totalJulyMonthlySales" class="number tmocolor"></span></div>
+							<div id="augustSales" class="number tmocolor">August <span id="totalAugustMonthlySales" class="number tmocolor"></span></div>
+							<div id="septemberSales" class="number tmocolor">September <span id="totalSeptemberMonthlySales" class="number tmocolor"></span></div>
+							<div id="octoberSales" class="number tmocolor">October <span id="totalOctoberMonthlySales" class="number tmocolor"></span></div>
+							<div id="novemberSales" class="number tmocolor">November <span id="totalNovemberMonthlySales" class="number tmocolor"></span></div>
+							<div id="decemberSales" class="number tmocolor">December <span id="totalDecemberMonthlySales" class="number tmocolor"></span></div>
 						</div>
 						<div style="float:left;">
 							<div id="january">
-								<canvas id="january-chart-area" height="100" width="800"/>
+								<label> January Sales </label>
+								<div>
+									<canvas id="january-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="february">
-								<canvas id="february-chart-area" height="100" width="100"/>
+								<label> February Sales </label>
+								<div>
+									<canvas id="february-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="march">
-								<canvas id="march-chart-area" height="100" width="100"/>
+								<label> March Sales </label>
+								<div>
+									<canvas id="march-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="april">
-								<canvas id="april-chart-area" height="100" width="100"/>
+								<label> April Sales </label>
+								<div>
+									<canvas id="april-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="may">
-								<canvas id="may-chart-area" height="100" width="100"/>
+								<label> May Sales </label>
+								<div>
+									<canvas id="may-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="june">
-								<canvas id="june-chart-area" height="100" width="100"/>
+								<label> June Sales </label>
+								<div>
+									<canvas id="june-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="july">
-								<canvas id="july-chart-area" height="100" width="100"/>
+								<label> July Sales </label>
+								<div>
+									<canvas id="july-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="august">
-								<canvas id="august-chart-area" height="100" width="100"/>
+								<label> August Sales </label>
+								<div>
+									<canvas id="august-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="september">
-								<canvas id="september-chart-area" height="100" width="100"/>
+								<label> September Sales </label>
+								<div>
+									<canvas id="september-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="october">
-								<canvas id="october-chart-area" height="100" width="100"/>
+								<label> October Sales </label>
+								<div>
+									<canvas id="october-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="november">
-								<canvas id="november-chart-area" height="100" width="100"/>
+								<label> November Sales </label>
+								<div>
+									<canvas id="november-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 							<div id="december">
-								<canvas id="december-chart-area" height="100" width="100"/>
+								<label> December Sales </label>
+								<div>
+									<canvas id="december-chart-area" height="100" width="800"/>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="item" id="barGraph" data-interval="10000">
 						<h2> Revenue/Order Comparison for 4 years using Bars</h2>
-						<div style="width: 80%">
-							<canvas id="bar-graph" height="400" width="600"></canvas>
+						<div style="width: 80% ">
+							<canvas id="bar-graph" height="180" width="600"></canvas>
 						</div>
 					</div>
 					<div class="item" id="lineGraph" data-interval="10000">
 						<h2> Revenue/Order Comparison for 4 years Using Line graph</h2>
 						<div style="width: 50%">
-							<canvas id="line-graph" height="400" width="600"></canvas>
+							<canvas id="line-graph" height="300" width="600"></canvas>
 						</div>
 					</div>
 					<div class="item" id="cityMap" data-interval="30000">
