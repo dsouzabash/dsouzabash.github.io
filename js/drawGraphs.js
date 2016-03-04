@@ -12,11 +12,21 @@ var firstLoadFlag;
 window.onload = function(){
 	firstLoadFlag = true;
 	redrawDoughnut();
+	var duration = $('.carousel-inner').find('.item.active').attr('data-interval');
+	console.log('In here: before pause' + duration);
+	$(".carousel").carousel('pause');
+	console.log('In here: after pause' + duration);
+	moveTimeout = setTimeout(function(){
+		console.log('Inside setTimeout: ' + duration);
+		$(".carousel").carousel('next');
+	},duration);
 	/*var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
 	*/
 };
+
+var moveTimeout;
 
 $(".carousel").on('slid.bs.carousel', function () {
 	//console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
@@ -47,14 +57,18 @@ $(".carousel").on('slid.bs.carousel', function () {
 		}
 		$('#container').hide();
 	}
-	/*var duration = $(this).find('.item.active').attr('data-interval');
+	var duration = $(this).find('.item.active').attr('data-interval');
 	console.log('In here: before pause' + duration);
 	$(".carousel").carousel('pause');
 	console.log('In here: after pause' + duration);
-	setTimeout(function(){
+	moveTimeout = setTimeout(function(){
 		console.log('Inside setTimeout: ' + duration);
 		$(".carousel").carousel('next');
-	},duration);*/
+	},duration);
+});
+
+$('.carousel-control.right,.carousel-control.left').on('click', function(){
+    clearTimeout(moveTimeout);
 });
 
 //-------------------------------Gooogle Maps javscript ------------------------//
@@ -103,18 +117,19 @@ $(".carousel").on('slid.bs.carousel', function () {
 //-------------------------------Donut javscript ------------------------//  
 var redrawDoughnut = function(){
 	console.log('Inside redrawDoughnut');
-	$("#january,#januarySales,#february,#march,#april,#may,#june,#july,#august,#september,#october,#november,#december").show();
-	$("#februarySales,#marchSales,#aprilSales,#maySales,#juneSales,#julySales,#augustSales,#septemberSales,#octoberSales,#novemberSales,#decemberSales").hide();
+	//$("#january,#januarySales,#february,#march,#april,#may,#june,#july,#august,#september,#october,#november,#december").show();
+	//$("#februarySales,#marchSales,#aprilSales,#maySales,#juneSales,#julySales,#augustSales,#septemberSales,#octoberSales,#novemberSales,#decemberSales").hide();
 	var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
+	$("#january,#januarySales").show();
 	redrawWidgetGraph();
 };
 
 var redrawWidgetGraph = function(){
 	console.log('Inside redrawWidgetgraph');
 	var commaStep = $.animateNumber.numberStepFactories.separator(',');
-	$('#totalJanuaryMonthlySales,#totalFebruaryMonthlySales,#totalMarchMonthlySales,#totalAprilMonthlySales,#totalMayMonthlySales,#totalJuneMonthlySales,#totalJulyMonthlySales,#totalAugustMonthlySales,#totalSeptemberMonthlySales,#totalOctoberMonthlySales,#totalNovemberMonthlySales,#totalDecemberMonthlySales').animateNumber({
+	$('#totalJanuaryMonthlySales').animateNumber({
 			number: randomScalingFactor(),
 			numberStep: commaStep
 	}, 3000);
@@ -128,139 +143,194 @@ var redrawWidgetGraph = function(){
 		$("#january,#januarySales").animate({
 			height: 'toggle'
 		});
-		$("#februarySales").show();
+		$("#february,#februarySales").show();
+		var febCtx = document.getElementById("february-chart-area").getContext("2d");
+			window.febBar = new Chart(febCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalFebruaryMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},10000);
-	var febCtx = document.getElementById("february-chart-area").getContext("2d");
-	window.febBar = new Chart(febCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+	
 	window.setTimeout(function(){
 		$("#february,#februarySales").animate({
 			height: 'toggle'
 		});
-		$("#marchSales").show();
+		$("#march,#marchSales").show();
+			var marCtx = document.getElementById("march-chart-area").getContext("2d");
+			window.marBar = new Chart(marCtx).Bar(barWidgetData, {
+				responsive : true,
+				width: 1000,
+				height: 100
+			});
+		$('#totalMarchMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},15000);
-	var marCtx = document.getElementById("march-chart-area").getContext("2d");
-	window.marBar = new Chart(marCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#march,#marchSales").animate({
 			height: 'toggle'
 		});
-		$("#aprilSales").show();
+		$("#april,#aprilSales").show();
+		$('#totalAprilMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
+		var aprCtx = document.getElementById("april-chart-area").getContext("2d");
+		window.aprBar = new Chart(aprCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
 	},20000);
-	var aprCtx = document.getElementById("april-chart-area").getContext("2d");
-	window.aprBar = new Chart(aprCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#april,#aprilSales").animate({
 			height: 'toggle'
 		});
-		$("#maySales").show();
+		$("#may,#maySales").show();
+		var mayCtx = document.getElementById("may-chart-area").getContext("2d");
+		window.mayBar = new Chart(mayCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});		
+		$('#totalMayMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},25000);
-	var mayCtx = document.getElementById("may-chart-area").getContext("2d");
-	window.mayBar = new Chart(mayCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#may,#maySales").animate({
 			height: 'toggle'
 		});
-		$("#juneSales").show();
+		$("#june,#juneSales").show();
+		var juneCtx = document.getElementById("june-chart-area").getContext("2d");
+		window.juneBar = new Chart(juneCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalJuneMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},30000);
-	var juneCtx = document.getElementById("june-chart-area").getContext("2d");
-	window.juneBar = new Chart(juneCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#june,#juneSales").animate({
 			height: 'toggle'
 		});
-		$("#julySales").show();
+		$("#july,#julySales").show();
+		var julCtx = document.getElementById("july-chart-area").getContext("2d");
+		window.julBar = new Chart(julCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalJulyMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},35000);
-	var julCtx = document.getElementById("july-chart-area").getContext("2d");
-	window.julBar = new Chart(julCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+	
 	window.setTimeout(function(){
 		$("#july,#julySales").animate({
 			height: 'toggle'
 		});
-		$("#augustSales").show();
+		$("#august,#augustSales").show();
+		var augCtx = document.getElementById("august-chart-area").getContext("2d");
+		window.augBar = new Chart(augCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalAugustMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},40000);
-	var augCtx = document.getElementById("august-chart-area").getContext("2d");
-	window.augBar = new Chart(augCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#august,#augustSales").animate({
 			height: 'toggle'
 		});
-		$("#septemberSales").show();
+		$("#september,#septemberSales").show();
+		var septCtx = document.getElementById("september-chart-area").getContext("2d");
+		window.septBar = new Chart(septCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalSeptemberMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},45000);
-	var septCtx = document.getElementById("september-chart-area").getContext("2d");
-	window.septBar = new Chart(septCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#september,#septemberSales").animate({
 			height: 'toggle'
 		});
-		$("#octoberSales").show();
+		$("#october,#octoberSales").show();
+		var octCtx = document.getElementById("october-chart-area").getContext("2d");
+		window.octBar = new Chart(octCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalOctoberMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},50000);
-	var octCtx = document.getElementById("october-chart-area").getContext("2d");
-	window.octBar = new Chart(octCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#october,#octoberSales").animate({
 			height: 'toggle'
 		});
-		$("#novemberSales").show();
+		$("#november,#novemberSales").show();
+		var novCtx = document.getElementById("november-chart-area").getContext("2d");
+		window.novBar = new Chart(novCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalNovemberMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},55000);
-	var novCtx = document.getElementById("november-chart-area").getContext("2d");
-	window.novBar = new Chart(novCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+
 	window.setTimeout(function(){
 		$("#november,#novemberSales").animate({
 			height: 'toggle'
 		});
-		$("#decemberSales").show();
+		$("#december,#decemberSales").show();
+		var decCtx = document.getElementById("december-chart-area").getContext("2d");
+		window.decBar = new Chart(decCtx).Bar(barWidgetData, {
+			responsive : true,
+			width: 1000,
+			height: 100
+		});
+		$('#totalDecemberMonthlySales').animateNumber({
+			number: randomScalingFactor(),
+			numberStep: commaStep
+		}, 2500);
 	},60000);
-	var decCtx = document.getElementById("december-chart-area").getContext("2d");
-	window.decBar = new Chart(decCtx).Bar(barWidgetData, {
-		responsive : true,
-		width: 1000,
-		height: 100
-	});
+	
 	window.setTimeout(function(){
 		$("#december,#decemberSales").animate({
 			height: 'toggle'
 		});
-	},65000);	
+	},65000);
 };
 
 //-------------------------------Graph javscript ------------------------//

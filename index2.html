@@ -143,25 +143,25 @@
 					<li data-target="#carousel" data-slide-to="3"></li>
 				</ol>
 				<div class="carousel-inner" role="listbox">
-					<div class="item active" id="doughnutChart" data-interval="10000">
+					<div class="item active" id="doughnutChart" data-interval="65000">
 						<div id="canvas-holder" style="width: 500px; height: 500px; float:left;" >
 							<canvas id="chart-area" height="500" width="500"/>
 						</div>
 						<div id="js-legend" class="chart-legend" style="width: 200px; height: 200px; float:left;">
 						</div>
 						<div id="monthly-figures" style="margin-left:10%;float:left;">
-							<div id="januarySales"  class="number tmocolor">January <span id="totalJanuaryMonthlySales"></span></div>
-							<div id="februarySales" class="number tmocolor">Feburary <span id="totalFebruaryMonthlySales"></span></div>
-							<div id="marchSales" class="number tmocolor">March <span id="totalMarchMonthlySales" class="number tmocolor"></span></div>
-							<div id="aprilSales" class="number tmocolor">April <span id="totalAprilMonthlySales" class="number tmocolor"></span></div>
-							<div id="maySales" class="number tmocolor">May <span id="totalMayMonthlySales" class="number tmocolor"></span></div>
-							<div id="juneSales" class="number tmocolor">June <span id="totalJuneMonthlySales" class="number tmocolor"></span></div>
-							<div id="julySales" class="number tmocolor">July <span id="totalJulyMonthlySales" class="number tmocolor"></span></div>
-							<div id="augustSales" class="number tmocolor">August <span id="totalAugustMonthlySales" class="number tmocolor"></span></div>
-							<div id="septemberSales" class="number tmocolor">September <span id="totalSeptemberMonthlySales" class="number tmocolor"></span></div>
-							<div id="octoberSales" class="number tmocolor">October <span id="totalOctoberMonthlySales" class="number tmocolor"></span></div>
-							<div id="novemberSales" class="number tmocolor">November <span id="totalNovemberMonthlySales" class="number tmocolor"></span></div>
-							<div id="decemberSales" class="number tmocolor">December <span id="totalDecemberMonthlySales" class="number tmocolor"></span></div>
+							<div id="januarySales"  class="number tmocolor" >January <span id="totalJanuaryMonthlySales"></span></div>
+							<div id="februarySales" class="number tmocolor" style="display: none;">Feburary <span id="totalFebruaryMonthlySales"></span></div>
+							<div id="marchSales" class="number tmocolor" style="display: none;">March <span id="totalMarchMonthlySales" class="number tmocolor"></span></div>
+							<div id="aprilSales" class="number tmocolor" style="display: none;">April <span id="totalAprilMonthlySales" class="number tmocolor"></span></div>
+							<div id="maySales" class="number tmocolor" style="display: none;">May <span id="totalMayMonthlySales" class="number tmocolor"></span></div>
+							<div id="juneSales" class="number tmocolor" style="display: none;">June <span id="totalJuneMonthlySales" class="number tmocolor"></span></div>
+							<div id="julySales" class="number tmocolor" style="display: none;">July <span id="totalJulyMonthlySales" class="number tmocolor"></span></div>
+							<div id="augustSales" class="number tmocolor" style="display: none;">August <span id="totalAugustMonthlySales" class="number tmocolor"></span></div>
+							<div id="septemberSales" class="number tmocolor" style="display: none;">September <span id="totalSeptemberMonthlySales" class="number tmocolor"></span></div>
+							<div id="octoberSales" class="number tmocolor" style="display: none;">October <span id="totalOctoberMonthlySales" class="number tmocolor"></span></div>
+							<div id="novemberSales" class="number tmocolor" style="display: none;">November <span id="totalNovemberMonthlySales" class="number tmocolor"></span></div>
+							<div id="decemberSales" class="number tmocolor" style="display: none;">December <span id="totalDecemberMonthlySales" class="number tmocolor"></span></div>
 						</div>
 						<div style="float:left;">
 							<div id="january">
@@ -170,67 +170,67 @@
 									<canvas id="january-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="february">
+							<div id="february" style="display: none;">
 								<label> February Sales </label>
 								<div>
 									<canvas id="february-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="march">
+							<div id="march" style="display: none;">
 								<label> March Sales </label>
 								<div>
 									<canvas id="march-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="april">
+							<div id="april" style="display: none;">
 								<label> April Sales </label>
 								<div>
 									<canvas id="april-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="may">
+							<div id="may" style="display: none;">
 								<label> May Sales </label>
 								<div>
 									<canvas id="may-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="june">
+							<div id="june" style="display: none;">
 								<label> June Sales </label>
 								<div>
 									<canvas id="june-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="july">
+							<div id="july" style="display: none;">
 								<label> July Sales </label>
 								<div>
 									<canvas id="july-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="august">
+							<div id="august" style="display: none;">
 								<label> August Sales </label>
 								<div>
 									<canvas id="august-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="september">
+							<div id="september" style="display: none;">
 								<label> September Sales </label>
 								<div>
 									<canvas id="september-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="october">
+							<div id="october" style="display: none;">
 								<label> October Sales </label>
 								<div>
 									<canvas id="october-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="november">
+							<div id="november" style="display: none;">
 								<label> November Sales </label>
 								<div>
 									<canvas id="november-chart-area" height="100" width="800"/>
 								</div>
 							</div>
-							<div id="december">
+							<div id="december" style="display: none;">
 								<label> December Sales </label>
 								<div>
 									<canvas id="december-chart-area" height="100" width="800"/>
