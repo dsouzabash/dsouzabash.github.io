@@ -36,6 +36,7 @@
 		.carousel-control.left, .carousel-control.right {
 			background-image: none !important;
 		}
+		body { background: black !important; }
 		body { color:pink;}
 		</style>
 
@@ -45,6 +46,7 @@
 				interval: false 
 			});
 		});
+		
 	</script>
 	<style>
       #map {
@@ -71,6 +73,7 @@
 							type: 'spline',
 							animation: Highcharts.svg, // don't animate in old IE
 							marginRight: 10,
+							backgroundColor:'black',
 							events: {
 								load: function () {
 									// set up the updating of the chart each second
@@ -115,6 +118,7 @@
 						},
 						series: [{
 							name: 'Page View data',
+							color: '#FF1493',
 							data: (function () {
 								// generate an array of random data
 								var data = [],

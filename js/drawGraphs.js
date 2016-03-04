@@ -27,6 +27,7 @@ window.onload = function(){
 };
 
 var moveTimeout;
+var monthlyTimeout;
 
 $(".carousel").on('slid.bs.carousel', function () {
 	//console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
@@ -69,6 +70,7 @@ $(".carousel").on('slid.bs.carousel', function () {
 
 $('.carousel-control.right,.carousel-control.left').on('click', function(){
     clearTimeout(moveTimeout);
+	clearTimeout(monthlyTimeout);
 });
 
 //-------------------------------Gooogle Maps javscript ------------------------//
@@ -122,7 +124,7 @@ var redrawDoughnut = function(){
 	var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
-	$("#january,#januarySales").show();
+	//$("#january,#januarySales").show();
 	redrawWidgetGraph();
 };
 
@@ -139,7 +141,7 @@ var redrawWidgetGraph = function(){
 		width: 1000,
 		height: 100
 	});
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#january,#januarySales").animate({
 			height: 'toggle'
 		});
@@ -156,7 +158,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},10000);
 	
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#february,#februarySales").animate({
 			height: 'toggle'
 		});
@@ -173,7 +175,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},15000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#march,#marchSales").animate({
 			height: 'toggle'
 		});
@@ -190,7 +192,7 @@ var redrawWidgetGraph = function(){
 		});
 	},20000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#april,#aprilSales").animate({
 			height: 'toggle'
 		});
@@ -200,14 +202,14 @@ var redrawWidgetGraph = function(){
 			responsive : true,
 			width: 1000,
 			height: 100
-		});		
+		});
 		$('#totalMayMonthlySales').animateNumber({
 			number: randomScalingFactor(),
 			numberStep: commaStep
 		}, 2500);
 	},25000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#may,#maySales").animate({
 			height: 'toggle'
 		});
@@ -224,7 +226,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},30000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#june,#juneSales").animate({
 			height: 'toggle'
 		});
@@ -241,7 +243,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},35000);
 	
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#july,#julySales").animate({
 			height: 'toggle'
 		});
@@ -258,7 +260,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},40000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#august,#augustSales").animate({
 			height: 'toggle'
 		});
@@ -275,7 +277,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},45000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#september,#septemberSales").animate({
 			height: 'toggle'
 		});
@@ -292,7 +294,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},50000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#october,#octoberSales").animate({
 			height: 'toggle'
 		});
@@ -309,7 +311,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},55000);
 
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#november,#novemberSales").animate({
 			height: 'toggle'
 		});
@@ -326,7 +328,7 @@ var redrawWidgetGraph = function(){
 		}, 2500);
 	},60000);
 	
-	window.setTimeout(function(){
+	monthlyTimeout = window.setTimeout(function(){
 		$("#december,#decemberSales").animate({
 			height: 'toggle'
 		});
