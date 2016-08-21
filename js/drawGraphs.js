@@ -8,14 +8,14 @@ console.log('Inside draw Graph');
 		this.legend = doughnutData;
 	});
 })();*/
-var firstLoadFlag;
+var firstLoadFlag,firstLoadWidgetFlag;
 window.onload = function(){
-	firstLoadFlag = true;
+	firstLoadFlag = firstLoadWidgetFlag = true;
 	redrawDoughnut();
 	var duration = $('.carousel-inner').find('.item.active').attr('data-interval');
-	console.log('In here: before pause' + duration);
+	//console.log('In here: before pause' + duration);
 	$(".carousel").carousel('pause');
-	console.log('In here: after pause' + duration);
+	//console.log('In here: after pause' + duration);
 	moveTimeout = setTimeout(function(){
 		console.log('Inside setTimeout: ' + duration);
 		$(".carousel").carousel('next');
@@ -28,6 +28,7 @@ window.onload = function(){
 
 var moveTimeout;
 var monthlyTimeout;
+var mapTimeout;
 
 $(".carousel").on('slid.bs.carousel', function () {
 	//console.log('The carousel has finished sliding from one item to another!: ' + $('.item.active').attr('id'));
@@ -46,7 +47,7 @@ $(".carousel").on('slid.bs.carousel', function () {
 	else if($('.item.active').attr('id') == 'cityMap'){
 		//console.log('firstLoadFlag: ' + firstLoadFlag);
 		if(firstLoadFlag == true)
-			initMap();
+			initMap('map',5);
 		else{
 			var i = 0;
 			(function loop() {
@@ -56,14 +57,24 @@ $(".carousel").on('slid.bs.carousel', function () {
 				}
 			})();
 		}
+		firstLoadFlag = false;
 		$('#container').hide();
 	}
+	else if($('.item.active').attr('id') == 'realTime'){
+		//console.log('firstLoadFlag: ' + firstLoadFlag);
+		$('#container').hide();
+		redrawLiveChart();
+		if(firstLoadWidgetFlag == true)
+			initMap('pageViewCity',4);
+		firstLoadWidgetFlag =false;
+	}
+	
 	var duration = $(this).find('.item.active').attr('data-interval');
-	console.log('In here: before pause' + duration);
+	//console.log('In here: before pause' + duration);
 	$(".carousel").carousel('pause');
-	console.log('In here: after pause' + duration);
+	//console.log('In here: after pause' + duration);
 	moveTimeout = setTimeout(function(){
-		console.log('Inside setTimeout: ' + duration);
+		//console.log('Inside setTimeout: ' + duration);
 		$(".carousel").carousel('next');
 	},duration);
 });
@@ -71,57 +82,74 @@ $(".carousel").on('slid.bs.carousel', function () {
 $('.carousel-control.right,.carousel-control.left').on('click', function(){
     clearTimeout(moveTimeout);
 	clearTimeout(monthlyTimeout);
+	clearTimeout(mapTimeout);
 });
 
 //-------------------------------Gooogle Maps javscript ------------------------//
-	var map;
-    function initMap() {
-		console.log('Inside initMap: ');
-		if(firstLoadFlag == true){
-			var i = 0;
-		}
-		firstLoadFlag = false;
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 39.697948, lng: -97.314835},
-          zoom: 5
-        });
-		
+var map;
+function initMap(divId,zoomNum) {
+	//console.log('Inside initMap: ');
+	if(firstLoadFlag == true){
+		var i = 0;
+	}
+	var i = 0;
+	var j=0;
+	//firstLoadFlag = false;
+    map = new google.maps.Map(document.getElementById(divId), {
+		center: {lat: 39.697948, lng: -97.314835},
+		zoom: zoomNum
+	});
+	if(divId == 'map'){
 		(function loop() {
-			codeAddress(mapData.cities[i],mapData.orders[i],mapData.revenue[i]);
+			codeAddress('orders',mapData.cities[i],mapData.orders[i],mapData.revenue[i]);
 			if (++i < mapData.cities.length) {
-				setTimeout(loop, 3000);
+				mapTimeout = setTimeout(loop, 3000);
 			}
 		})();
-    };  
-	
-	function codeAddress(incomingCity,incomingOrders,incomingRevenue) {
-		var geocoder =  new google.maps.Geocoder();
-		geocoder.geocode( { 'address': incomingCity}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				var marker = new google.maps.Marker({
-					position: results[0].geometry.location,
-					map: map,
-					title: 'Center (Click)'
-				});
-				
-				map.panTo(results[0].geometry.location);
-				map.setCenter(results[0].geometry.location);
-				var infowindow = new google.maps.InfoWindow({
-					content: 'City :' + incomingCity + "<br/>" + 'Orders : ' + incomingOrders + "<br/>" +'Revenue : ' + incomingRevenue,
-					
-				});
-				infowindow.open(map, marker);
-				window.setTimeout(function(){
-					infowindow.close(map, marker);
-				},1500);
-			} else {
-				console.log("Geocode was not successful for the following reason: " + status);
-			}
-		});
 	}
+	else if(divId == 'pageViewCity'){
+		console.log(mapViewData);
+		(function loop() {
+			codeAddress('pageViews',mapViewData.cities[j],mapViewData.pageViews[j],'');
+			if (++j < mapViewData.cities.length) {
+				console.log('inside if condition: ' + mapViewData.cities[j]);
+				mapTimeout = setTimeout(loop, 3000);
+			}
+		})();
+	}
+};
+
+function codeAddress(type,incomingCity, incomingOrders, incomingRevenue) {
+	console.log('Inside codeAddress:');
+	
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+        'address': incomingCity
+    }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map,
+                title: 'Center (Click)'
+            });
+            map.panTo(results[0].geometry.location);
+            map.setCenter(results[0].geometry.location);
+            var infowindow = new google.maps.InfoWindow({
+                content: 'City :' + incomingCity + "<br/>" + 'Orders : ' + incomingOrders + "<br/>" + 'Revenue : ' + incomingRevenue,
+
+            });
+            infowindow.open(map, marker);
+            window.setTimeout(function() {
+                infowindow.close(map, marker);
+            }, 1500);
+        } else {
+            console.log("Geocode was not successful for the following reason: " + status);
+        }
+    });
+}
 //-------------------------------Donut javscript ------------------------//  
 var redrawDoughnut = function(){
-	console.log('Inside redrawDoughnut');
+	//console.log('Inside redrawDoughnut');
 	var ctx = document.getElementById("chart-area").getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 	document.getElementById('js-legend').innerHTML = myDoughnut.generateLegend();
@@ -135,7 +163,7 @@ var totalMonthlySales = ['totalJanuaryMonthlySales','totalFebruaryMonthlySales',
 var commaStep = $.animateNumber.numberStepFactories.separator(',');
 var i;
 var redrawWidgetGraph = function(){
-	console.log('Inside redrawWidgetgraph: ' + i);
+	//console.log('Inside redrawWidgetgraph: ' + i);
 	if(firstLoadFlag == true || i ==11){
 		i = -1;
 	}
@@ -158,7 +186,7 @@ var redrawWidgetGraph = function(){
 };
 
 var monthlyDisplay = function(index){
-	console.log('Inside monthlyDisplay: ' + monthArray[index]);
+	//console.log('Inside monthlyDisplay: ' + monthArray[index]);
 	if(index!=12){
 		$("#" + monthArray[index] + ",#" + monthlySalesGraph[index]).animate({
 			height: 'toggle'
@@ -179,7 +207,7 @@ var monthlyDisplay = function(index){
 
 //-------------------------------Graph javscript ------------------------//
 var redrawGraph = function(){
-	console.log('Inside redrawgraph');
+	//console.log('Inside redrawgraph');
 	var ctx = document.getElementById("bar-graph").getContext("2d");
 	window.myBar = new Chart(ctx).Bar(barChartData, {
 		responsive : true,
@@ -190,7 +218,7 @@ var redrawGraph = function(){
 
 //-------------------------------Line Graph javscript ------------------------//
 var redrawLineGraph = function(){
-	console.log('Inside redrawgraph');
+	//console.log('Inside redrawgraph');
 	var ctx = document.getElementById("line-graph").getContext("2d");
 	window.myLine = new Chart(ctx).Line(barChartData, {
 		responsive: true
@@ -198,3 +226,86 @@ var redrawLineGraph = function(){
 };
 
 var randomScalingFactor = function(){ return Math.round(Math.random()*10000)};
+
+var redrawLiveChart = function() {
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    $('#livePageViewGraph').highcharts({
+        chart: {
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            backgroundColor: 'black',
+            events: {
+                load: function() {
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    setInterval(function() {
+                        var x = (new Date()).getTime(), // current time
+                            y = Math.random();
+                        series.addPoint([x, y], true, true);
+                    }, 1000);
+                }
+            }
+        },
+        title: {
+            text: 'Live page view data',
+			color: '#FF1493'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function() {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'Page View data',
+            color: '#FF1493',
+            data: (function() {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: Math.random()
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+};
+
+var redrawWidgetMap = function(){
+	map = new google.maps.Map(document.getElementById('pageViewCity'), {
+		center: {lat: 39.697948, lng: -97.314835},
+		zoom: 4
+	});
+}

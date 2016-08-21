@@ -105,9 +105,14 @@ barWidgetData = {
 		}
 	]
 };
-	
+
 mapData = {
 	cities : ["New York City", "Miami", "Seattle","Denver", "Chicago", "Dallas", "Washington D.C", "Philadelphia"],
 	orders : ["10,000", "12,001", "9,807", "1,275", "3,541","7,531","6,232","2,103"],
 	revenue : ["$1,000", "$2,001", "$807", "$275", "$541","$531","$232","$103"]
+};
+
+mapViewData = {
+	cities : ["New York City", "Miami", "Seattle","Denver", "Chicago", "Dallas", "Washington D.C", "Philadelphia"],
+	pageViews : ["10,000", "12,001", "9,807", "1,275", "3,541","7,531","6,232","2,103"]
 }
